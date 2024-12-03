@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h2 className="title">CALENDAR </h2>
+      <div className="days">
+        <div className="dayNames">Monday</div>
+        <div className="dayNames">Tuesday</div>
+        <div className="dayNames">Wednesday</div>
+        <div className="dayNames">Thursday</div>
+        <div className="dayNames">Friday</div>
+        <div className="dayNames">Saturday</div>
+        <div className="dayNames">Sunday</div>
+      </div>
+      <div className="grid-container">
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+        <div className="cell">day</div>
+      </div>
+    </>
   );
 }
 
 export default App;
+
+// function createCell(){
+//   for(let i = 0; i < 30; i++){
+//     <div className="cell">{i}</div>
+//   }}
