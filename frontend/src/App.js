@@ -1,58 +1,26 @@
+import { useContext, useState } from "react";
 import "./App.css";
+import InputForm from "./components/InputForm";
+import CalendarContextProvider from "./contexts/CalendarContext";
+import { CalendarContext } from "./contexts/CalendarContext";
+import Home from "./pages/Home";
 
 function App() {
+  const [isFormDisplayed, setIsFormDisplayed] = useState(false);
+  console.log(isFormDisplayed);
+
+  if (isFormDisplayed) {
+    console.log("isFormDisplayed is true");
+    console.log(isFormDisplayed);
+  }
+
   return (
     <>
-      <h2 className="title">CALENDAR </h2>
-      <div className="days">
-        <div className="dayNames">Monday</div>
-        <div className="dayNames">Tuesday</div>
-        <div className="dayNames">Wednesday</div>
-        <div className="dayNames">Thursday</div>
-        <div className="dayNames">Friday</div>
-        <div className="dayNames">Saturday</div>
-        <div className="dayNames">Sunday</div>
-      </div>
-      <div className="grid-container">
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-        <div className="cell">day</div>
-      </div>
+      <CalendarContextProvider value={isFormDisplayed}>
+        <Home />
+      </CalendarContextProvider>
     </>
   );
 }
 
 export default App;
-
-// function createCell(){
-//   for(let i = 0; i < 30; i++){
-//     <div className="cell">{i}</div>
-//   }}
