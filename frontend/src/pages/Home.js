@@ -5,30 +5,28 @@ import InputForm from "../components/InputForm";
 import { CalendarContext } from "../contexts/CalendarContext";
 
 function Home() {
-  const { isFormDisplayed, setIsFormDisplayed } = useContext(CalendarContext);
-  console.log(isFormDisplayed);
+  const { isFormDisplayed, setIsFormDisplayed, currentTime, setCurrentTime } =
+    useContext(CalendarContext);
 
   function handleClick() {
     console.log("button is clicked");
-    // e.preventDefault();
-    // return <InputForm />;
     setIsFormDisplayed(true);
-  }
-
-  if (isFormDisplayed) {
-    console.log("isFormDisplayed is true");
-    console.log(isFormDisplayed);
+    const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+    setCurrentTime(now);
+    console.log(currentTime);
   }
 
   function emptyCells() {
     let arr = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i <= 30; i++) {
       arr.push(
         <div className="cell" key={i}>
           <div className="cellTextContainer">
             <div className="cellText">{i}</div>
           </div>
-          <button className="editButton" onClick={handleClick}>
+          <button className="editButton" onClick={handleClick} id={i}>
             View/Edit
           </button>
         </div>

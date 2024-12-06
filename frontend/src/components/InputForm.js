@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { MdDelete } from "react-icons/md";
 
 function InputForm() {
-  const { isFormDisplayed, setIsFormDisplayed } = useContext(CalendarContext);
+  const [dateTime, setDateTime] = useState("");
+  const [entryText, setEntryText] = useState("");
+
+  const { setIsFormDisplayed, currentTime } = useContext(CalendarContext);
+
   function handleClick() {
     setIsFormDisplayed(false);
-    console.log(isFormDisplayed);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(entryText + " @", dateTime);
   }
 
   function handleDeleteClick(e) {
     e.preventDefault();
     console.log("events deleted");
+  }
+
+  function handleChange(e) {
+    setDateTime(e.target.value);
   }
 
   return (
@@ -30,18 +38,24 @@ function InputForm() {
           </button>
           <form className="addEntry" onSubmit={handleSubmit}>
             <label className="addEvent">Add Event:</label>
-            <input type="text" name="" id="" required />
-            <label for="meeting-time">
-              Choose a time for your appointment:
-            </label>
+            <input
+              className="addEventText"
+              type="text"
+              name=""
+              id=""
+              onChange={(e) => setEntryText(e.target.value)}
+              value={entryText}
+              required
+            />
+            <label for="meeting-time">Choose your event:</label>
             <input
               type="datetime-local"
               id="meeting-time"
               name="meeting-time"
-              value="2018-06-12T19:30"
-              min="2024-12-04T00:00"
-              // fix that^
+              value={dateTime}
+              min={currentTime}
               max="2099-06-14T00:00"
+              onChange={handleChange}
             />
             <input className="submitButton" type="submit" />
           </form>
