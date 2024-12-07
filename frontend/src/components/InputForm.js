@@ -47,7 +47,7 @@ function InputForm() {
               value={entryText}
               required
             />
-            <label for="meeting-time">Choose your event:</label>
+            <label for="meeting-time">Choose your date:</label>
             <input
               type="datetime-local"
               id="meeting-time"
