@@ -19,6 +19,6 @@ router.post("/", createEvent);
 
 // router.get("/:date", getEventsByDate);
 
-// router.get("/get", getAllEvents);
+router.get("/", getAllEvents);
 
 module.exports = router;

@@ -29,10 +29,13 @@ const createEvent = async (req, res) => {
   }
 };
 
-// const getEvents = async (req, res) => {
-//   res.status(200).json(events);
-// };
+const getAllEvents = async (req, res) => {
+  const allEvents = await Event.find();
+  console.log(allEvents);
+  res.status(200).json(allEvents);
+};
 
 module.exports = {
   createEvent,
+  getAllEvents,
 };

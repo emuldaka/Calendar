@@ -5,13 +5,6 @@ import Home from "./pages/Home";
 
 function App() {
   const [isFormDisplayed, setIsFormDisplayed] = useState(false);
-  const [message, setMessage] = useState("");
-
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/api")
-  //     .then((response) => response.json())
-  //     .then((data) => setMessage(data.message));
-  // }, []);
 
   return (
     <>

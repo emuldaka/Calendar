@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { MdDelete } from "react-icons/md";
+import { useEventSubmit } from "../hooks/useEventSubmit";
 
 function InputForm() {
   const [dateTime, setDateTime] = useState("");
   const [entryText, setEntryText] = useState("");
+  const { eventSubmit, error, isLoading } = useEventSubmit();
 
   const { setIsFormDisplayed, currentTime } = useContext(CalendarContext);
+
+  //potential future page/hook below
+  // useEffect(() => {
+  //   const fetchCurrentEvents = async () => {
+  //     const response = await fetch("http://localhost:5000/api/events");
+  //     const json = await response.json();
+  //     console.log("events:", json);
+  //     if (response.ok) {
+  //       console.log("events:", json);
+  //     }
+  //   };
+  // }, []);
+  // ^^^^
+
+  async function fetchCurrentEvents() {
+    const response = await fetch("http://localhost:5000/api/events");
+    const json = await response.json();
+    // console.log("events:", json);
+    if (response.ok) {
+      console.log("events:", json);
+    }
+  }
+
+  // fetchCurrentEvents();
 
   function handleClick() {
     setIsFormDisplayed(false);
@@ -17,6 +43,7 @@ function InputForm() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log(entryText + " @", dateTime);
+    eventSubmit(entryText, dateTime);
   }
 
   function handleDeleteClick(e) {
@@ -66,6 +93,7 @@ function InputForm() {
             <button className="delete" onClick={handleDeleteClick}>
               <MdDelete size={34} style={{ height: 40, width: 40 }} />
             </button>
+            <div className="currentEvents"></div>
           </form>
         </div>
       </div>
