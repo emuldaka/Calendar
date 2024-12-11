@@ -1,43 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
-import { MdDelete } from "react-icons/md";
 import { useEventSubmit } from "../hooks/useEventSubmit";
+import Event from "./Event";
+import { MdDelete } from "react-icons/md";
 
 function InputForm() {
   const [dateTime, setDateTime] = useState("");
   const [entryText, setEntryText] = useState("");
+  const [currentEvents, setCurrentEvents] = useState([]);
   const { eventSubmit, error, isLoading } = useEventSubmit();
+  const [isChecked, setIsChecked] = useState(false);
 
   const { setIsFormDisplayed, currentTime } = useContext(CalendarContext);
 
-  //potential future page/hook below
-  // useEffect(() => {
-  //   const fetchCurrentEvents = async () => {
-  //     const response = await fetch("http://localhost:5000/api/events");
-  //     const json = await response.json();
-  //     console.log("events:", json);
-  //     if (response.ok) {
-  //       console.log("events:", json);
-  //     }
-  //   };
-  // }, []);
-  // ^^^^
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    fetchCurrentEvents();
+  }, []);
+
+  useEffect(() => {
+    console.log(divRef);
+  }, [divRef]);
 
   async function fetchCurrentEvents() {
     const response = await fetch("http://localhost:5000/api/events");
     const json = await response.json();
-    // console.log("events:", json);
     if (response.ok) {
-      console.log("events:", json);
+      setCurrentEvents(json);
     }
   }
 
-  // fetchCurrentEvents();
-
   function handleClick() {
     setIsFormDisplayed(false);
+  }
+
+  function eventsArrayPopulator() {
+    let eventsArray = [];
+
+    for (let i = 0; i <= currentEvents.length - 1; i++) {
+      eventsArray.push(
+        <Event
+          id={i}
+          title={currentEvents[i]?.title}
+          date={currentEvents[i]?.date}
+        />
+      );
+    }
+    console.log(eventsArray);
+    return eventsArray;
   }
 
   function handleSubmit(e) {
@@ -48,6 +61,7 @@ function InputForm() {
 
   function handleDeleteClick(e) {
     e.preventDefault();
+    console.log(e.target.value);
     console.log("events deleted");
   }
 
@@ -93,7 +107,7 @@ function InputForm() {
             <button className="delete" onClick={handleDeleteClick}>
               <MdDelete size={34} style={{ height: 40, width: 40 }} />
             </button>
-            <div className="currentEvents"></div>
+            <div className="currentEvents">{eventsArrayPopulator()}</div>
           </form>
         </div>
       </div>

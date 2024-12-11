@@ -97,13 +97,15 @@ body {
   width: 50rem;
   height: 65rem;
   background-color: #191a00;
-  text-align: center;
+  align-items: center;
   color: #fff;
-  font-size: 44px;
+  font-size: 34px;
   font-weight: bold;
   border: 2px solid #00ff95;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-right: auto;
+  letter-spacing: 2px;
+  line-height: 2;
 }
 
 .formContainer {
@@ -131,4 +133,48 @@ body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
+}
+
+.eventsTitle {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.currentEvents {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns checkbox to the right */
+  align-items: center; /* Vertically center the checkbox */
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+.eventsArrayDiv {
+  display: flex; /* Use flexbox */
+  flex-direction: row; /* Align items in a row (horizontally) */
+  width: 95%;
+  justify-content: space-between; /* Optional: aligns items to the start (left) */
+  align-items: center;
+  margin-left: 20px;
+}
+
+.deleteButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-bottom: 40px; */
+}
+
+.eventsArrayDivDates {
+  align-items: center;
+  justify-content: start;
 }
