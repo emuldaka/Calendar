@@ -3,7 +3,7 @@ const {
   createEvent,
   getEvent,
   getAllEvents,
-  deleteEvent,
+  deleteEvents,
   updateEvent,
   getEvents,
   getEventsByDate,
@@ -17,8 +17,10 @@ const router = express.Router();
 
 router.post("/", createEvent);
 
-// router.get("/:date", getEventsByDate);
+router.get("/:date", getEventsByDate);
 
 router.get("/", getAllEvents);
+
+router.delete("/", deleteEvents);
 
 module.exports = router;
