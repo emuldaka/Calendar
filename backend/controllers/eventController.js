@@ -46,15 +46,11 @@ const getEventsByDate = async (req, res) => {
 };
 
 const deleteEvents = async (req, res) => {
-  console.log(req.body);
+  console.log("delete event", req.body);
+
+  let request = req.body.data;
+  const deleteRequests = await Event.deleteMany({ _id: { $in: request } });
   res.status(200).json("delete req recieved");
-  let request = req.body;
-  let idArray = [];
-  for (let i = 0; i < request.data.length; i++) {
-    idArray.push(request.data[i]);
-  }
-  console.log(idArray);
-  const deleteRequests = await Event.deleteMany({ _id: { $in: idArray } });
 };
 
 module.exports = {

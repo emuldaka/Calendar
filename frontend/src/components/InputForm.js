@@ -12,18 +12,18 @@ function InputForm() {
   const [currentEvents, setCurrentEvents] = useState([]);
   const { eventSubmit, error, isLoading } = useEventSubmit();
   const [isChecked, setIsChecked] = useState(false);
-
+  const [checkedEvents, setCheckedEvents] = useState({});
+  const [currentMonth, setCurrentMonth] = useState();
   const { setIsFormDisplayed, currentTime } = useContext(CalendarContext);
-
-  const divRef = useRef(null);
+  const [eventsArray, setEventsArray] = useState([]);
 
   useEffect(() => {
     fetchCurrentEvents();
   }, []);
 
   useEffect(() => {
-    console.log(divRef);
-  }, [divRef]);
+    eventsArrayPopulator();
+  }, [currentEvents, checkedEvents]);
 
   async function fetchCurrentEvents() {
     const response = await fetch("http://localhost:5000/api/events");
@@ -38,19 +38,25 @@ function InputForm() {
   }
 
   function eventsArrayPopulator() {
-    let eventsArray = [];
+    const localEventsArray = currentEvents.map((event) => (
+      <Event
+        key={event._id}
+        id={event._id}
+        title={event.title}
+        date={event.date}
+        isChecked={checkedEvents[event._id] || false}
+        handleCheckClick={(id, isChecked) => handleCheckClick(id, isChecked)}
+      />
+    ));
+    setEventsArray(localEventsArray);
+  }
 
-    for (let i = 0; i <= currentEvents.length - 1; i++) {
-      eventsArray.push(
-        <Event
-          id={i}
-          title={currentEvents[i]?.title}
-          date={currentEvents[i]?.date}
-        />
-      );
-    }
-    console.log(eventsArray);
-    return eventsArray;
+  function handleCheckClick(id, isChecked) {
+    setCheckedEvents((prev) => ({
+      ...prev,
+      [id]: isChecked,
+    }));
+    console.log(checkedEvents);
   }
 
   function handleSubmit(e) {
@@ -59,16 +65,26 @@ function InputForm() {
     eventSubmit(entryText, dateTime);
   }
 
-  function handleDeleteClick(e) {
+  async function handleDeleteClick(e) {
     e.preventDefault();
-    console.log(e.target.value);
-    console.log("events deleted");
+    const idArray = Object.keys(checkedEvents);
+
+    const response = await fetch("http://localhost:5000/api/events", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: [...idArray] }),
+    });
+    if (response.ok) {
+      console.log([...idArray]);
+      console.log("OOOKAy");
+    }
+    // console.log("events deleted");
   }
 
   function handleChange(e) {
     setDateTime(e.target.value);
   }
-
+  // console.log(currentMonth);
   return (
     <>
       <div className="formOuterContainer">
@@ -107,7 +123,7 @@ function InputForm() {
             <button className="delete" onClick={handleDeleteClick}>
               <MdDelete size={34} style={{ height: 40, width: 40 }} />
             </button>
-            <div className="currentEvents">{eventsArrayPopulator()}</div>
+            <div className="currentEvents">{eventsArray}</div>
           </form>
         </div>
       </div>

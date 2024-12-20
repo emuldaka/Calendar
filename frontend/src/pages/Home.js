@@ -3,10 +3,12 @@ import { useContext } from "react";
 import "../App.css";
 import InputForm from "../components/InputForm";
 import { CalendarContext } from "../contexts/CalendarContext";
+import { useState } from "react";
 
 function Home() {
   const { isFormDisplayed, setIsFormDisplayed, currentTime, setCurrentTime } =
     useContext(CalendarContext);
+  const [currentMonth] = useState();
 
   function handleClick() {
     console.log("button is clicked");
@@ -38,6 +40,7 @@ function Home() {
   return (
     <>
       <h2 className="title">CALENDAR </h2>
+      <h2 className="currentMonth">{currentMonth}</h2>
 
       {isFormDisplayed ? (
         <InputForm />

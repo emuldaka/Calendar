@@ -1,14 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-function Event({ id, title, date }) {
-  const [isChecked, setIsChecked] = useState(false);
-
-  function deleteSubmit(e) {
-    e.preventDefault();
-    setIsChecked(e.target.checked);
-    console.log(e.target.checked);
-  }
-
+function Event({ id, title, date, isChecked, handleCheckClick }) {
   const dateSlice = date.substring(0, 10);
 
   const timeSlice = date.substring(11, 16);
@@ -17,7 +9,9 @@ function Event({ id, title, date }) {
     <>
       <div className="eventsArrayDiv">
         <div>{title}</div>
-        <div className="eventsArrayDivDates">{dateSlice}</div>
+        <div className="eventsArrayDivDates" id={id}>
+          {dateSlice}
+        </div>
         <div>{timeSlice}</div>
         <input
           className="checkbox-container"
@@ -25,7 +19,7 @@ function Event({ id, title, date }) {
           checked={isChecked}
           size={24}
           value={title}
-          onChange={deleteSubmit}
+          onChange={(e) => handleCheckClick(id, e.target.checked)}
           style={{
             height: 20,
             width: 20,
