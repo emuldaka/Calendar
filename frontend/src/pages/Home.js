@@ -5,6 +5,8 @@ import InputForm from "../components/InputForm";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { useState } from "react";
 import { useCurrentMonth } from "../hooks/useCurrentMonth";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 function Home() {
   const {
@@ -69,12 +71,28 @@ function Home() {
     return arr;
   }
 
+  function leftPagination() {
+    console.log("left arrow clicked");
+  }
+
+  function rightPagination() {
+    console.log("right arrow clicked");
+  }
+
   return (
     <>
       <h2 className="title">CALENDAR </h2>
-      <h2 className="currentMonth">
-        {useCurrentMonth(currentTime)} {currentTime.substring(0, 4)}
-      </h2>
+      <div className="currentMonthCon">
+        <button className="pageLeft" onClick={leftPagination}>
+          <IoIosArrowBack size={20} />
+        </button>
+        <h2 className="currentMonth">
+          {useCurrentMonth(currentTime)} {currentTime.substring(0, 4)}
+        </h2>
+        <button className="pageRight" onClick={rightPagination}>
+          <IoIosArrowForward size={20} />
+        </button>
+      </div>
 
       {isFormDisplayed ? (
         <InputForm />

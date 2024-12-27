@@ -1,8 +1,4 @@
-import { useState } from "react";
-
 export const useCurrentMonth = (currentTime) => {
-  const [currentMonth, setCurrentMonth] = useState("");
-
   const monthsOrdered = [
     "January",
     "Febuary",

@@ -75,6 +75,7 @@ function InputForm() {
     e.preventDefault();
     console.log(entryText + " @", dateTime);
     eventSubmit(entryText, dateTime);
+    fetchCurrentEvents();
   }
 
   async function handleDeleteClick(e) {

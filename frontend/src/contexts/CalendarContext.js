@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { useCurrentMonth } from "../hooks/useCurrentMonth";
 
 export const CalendarContext = createContext();
 
@@ -9,6 +10,9 @@ const CalendarContextProvider = ({ children }) => {
   const [cellYear, setCellYear] = useState("");
   const [cellMonth, setCellMonth] = useState("");
   const [cellDay, setCellDay] = useState("");
+  const [monthPagination, setMonthPagination] = useState(
+    useCurrentMonth(currentTime)
+  );
 
   return (
     <CalendarContext.Provider
@@ -25,6 +29,8 @@ const CalendarContextProvider = ({ children }) => {
         setCellMonth,
         cellYear,
         setCellYear,
+        monthPagination,
+        setMonthPagination,
       }}
     >
       {children}

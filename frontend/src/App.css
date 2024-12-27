@@ -180,3 +180,23 @@ input[type="checkbox"] {
   align-items: center;
   justify-content: start;
 }
+
+.currentMonthCon {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Distribute space between elements */
+  gap: 10px;
+}
+
+.pageLeft,
+.pageRight {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.currentMonth {
+  margin: 0;
+  font-size: 20px;
+  text-align: center;
+}
