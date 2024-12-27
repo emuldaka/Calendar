@@ -16,6 +16,9 @@ function InputForm() {
   const [currentMonth, setCurrentMonth] = useState();
   const { setIsFormDisplayed, currentTime } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
+  const [cellYear, setCellYear] = useState("");
+  const [cellMonth, setCellMonth] = useState("");
+  const [cellDay, setCellDay] = useState("");
 
   useEffect(() => {
     fetchCurrentEvents();
@@ -76,6 +79,7 @@ function InputForm() {
     });
     if (response.ok) {
       console.log([...idArray]);
+      fetchCurrentEvents();
       console.log("OOOKAy");
     }
     // console.log("events deleted");

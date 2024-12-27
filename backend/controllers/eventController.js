@@ -36,10 +36,15 @@ const getAllEvents = async (req, res) => {
 };
 
 const getEventsByDate = async (req, res) => {
-  const date = new Date(req.params.date);
-  console.log(date);
+  const startOfDay = new Date(`${req.params.date}T00:00:00.000Z`);
+  const endOfDay = new Date(`${req.params.date}T23:59:59.999Z`);
+  // const date = new Date(req.params.date);
+  // console.log(date);
   const eventsByDate = await Event.find({
-    date: date,
+    date: {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    },
   });
   console.log(eventsByDate);
   res.status(200).json(eventsByDate);
