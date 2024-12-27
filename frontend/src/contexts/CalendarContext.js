@@ -6,6 +6,9 @@ const CalendarContextProvider = ({ children }) => {
   const [isFormDisplayed, setIsFormDisplayed] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
+  const [cellYear, setCellYear] = useState("");
+  const [cellMonth, setCellMonth] = useState("");
+  const [cellDay, setCellDay] = useState("");
 
   return (
     <CalendarContext.Provider
@@ -16,6 +19,12 @@ const CalendarContextProvider = ({ children }) => {
         setCurrentTime,
         currentMonth,
         setCurrentMonth,
+        cellDay,
+        setCellDay,
+        cellMonth,
+        setCellMonth,
+        cellYear,
+        setCellYear,
       }}
     >
       {children}

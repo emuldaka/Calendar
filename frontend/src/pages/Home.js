@@ -14,10 +14,13 @@ function Home() {
     setCurrentTime,
     currentMonth,
     setCurrentMonth,
+    cellDay,
+    setCellDay,
+    cellMonth,
+    setCellMonth,
+    cellYear,
+    setCellYear,
   } = useContext(CalendarContext);
-  const [cellYear, setCellYear] = useState("");
-  const [cellMonth, setCellMonth] = useState("");
-  const [cellDay, setCellDay] = useState("");
 
   const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
@@ -27,10 +30,13 @@ function Home() {
   function handleClick(e) {
     e.preventDefault();
     console.log("button is clicked");
-    setCellDay(e.target.id);
+    if (e.target.id < 10) {
+      setCellDay("0" + e.target.id.toString());
+    } else {
+      setCellDay(e.target.id);
+    }
     setCellMonth(currentMonth);
     setCellYear(currentTime.substring(0, 4));
-
     setIsFormDisplayed(true);
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()

@@ -14,11 +14,17 @@ function InputForm() {
   const [isChecked, setIsChecked] = useState(false);
   const [checkedEvents, setCheckedEvents] = useState({});
   const [currentMonth, setCurrentMonth] = useState();
-  const { setIsFormDisplayed, currentTime } = useContext(CalendarContext);
+  const {
+    setIsFormDisplayed,
+    currentTime,
+    cellDay,
+    setCellDay,
+    cellMonth,
+    setCellMonth,
+    cellYear,
+    setCellYear,
+  } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
-  const [cellYear, setCellYear] = useState("");
-  const [cellMonth, setCellMonth] = useState("");
-  const [cellDay, setCellDay] = useState("");
 
   useEffect(() => {
     fetchCurrentEvents();
@@ -26,10 +32,13 @@ function InputForm() {
 
   useEffect(() => {
     eventsArrayPopulator();
+    console.log(cellYear + "-" + cellMonth + "-" + cellDay);
   }, [currentEvents, checkedEvents]);
 
   async function fetchCurrentEvents() {
-    const response = await fetch("http://localhost:5000/api/events");
+    const response = await fetch(
+      `http://localhost:5000/api/events/${cellYear}-${cellMonth}-${cellDay}`
+    );
     const json = await response.json();
     if (response.ok) {
       setCurrentEvents(json);
