@@ -22,7 +22,14 @@ function Home() {
     setCellMonth,
     cellYear,
     setCellYear,
+    monthPagination,
+    setMonthPagination,
+    yearPagination,
+    setYearPagination,
   } = useContext(CalendarContext);
+  const [emptyCellStartDates, setEmptyCellStartDates] = useState([
+    3, 6, 6, 2, 4, 7, 2, 5, 1, 3, 6, 1,
+  ]);
 
   const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
@@ -54,9 +61,25 @@ function Home() {
 
   function emptyCells() {
     let monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    // let startDates = [3, 6, 6, 2, 4, 7, 2, 5, 1, 3, 6, 1];
 
     let arr = [];
-    for (let i = 1; i <= monthDays[Number(currentMonth) - 1]; i++) {
+
+    if (yearPagination % 4 === 0) {
+      monthDays[1] = 29;
+    }
+
+    for (let j = 1; j < emptyCellStartDates[monthPagination - 1]; j++) {
+      arr.push(
+        <div className="cell">
+          <div className="cellTextContainer">
+            <div className="cellText"></div>
+          </div>
+        </div>
+      );
+    }
+
+    for (let i = 1; i <= monthDays[monthPagination - 1]; i++) {
       arr.push(
         <div className="cell" key={i}>
           <div className="cellTextContainer">
@@ -77,6 +100,24 @@ function Home() {
 
   function rightPagination() {
     console.log("right arrow clicked");
+    if (monthPagination === 12) {
+      setMonthPagination(1);
+      setYearPagination(yearPagination + 1);
+
+      // setEmptyCellStartDates(() => {});
+
+      // for (let i = 0; i <= emptyCellStartDates.length; i++) {
+      //   if (emptyCellStartDates[i] < 7) {
+      //     setEmptyCellStartDates([emptyCellStartDates[i] + 1]);
+      //   }
+      //   if (emptyCellStartDates[i] === 7) {
+      //     setEmptyCellStartDates([(emptyCellStartDates[i] = 0)]);
+      //   }
+      // }
+    } else {
+      setMonthPagination(monthPagination + 1);
+    }
+    console.log(monthPagination);
   }
 
   return (
@@ -87,7 +128,7 @@ function Home() {
           <IoIosArrowBack size={20} />
         </button>
         <h2 className="currentMonth">
-          {useCurrentMonth(currentTime)} {currentTime.substring(0, 4)}
+          {useCurrentMonth(monthPagination)} {yearPagination}
         </h2>
         <button className="pageRight" onClick={rightPagination}>
           <IoIosArrowForward size={20} />

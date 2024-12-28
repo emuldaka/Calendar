@@ -193,6 +193,7 @@ input[type="checkbox"] {
   padding: 10px 15px;
   font-size: 16px;
   cursor: pointer;
+  background-color: #fbfffd3f;
 }
 
 .currentMonth {
