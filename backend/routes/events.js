@@ -7,6 +7,7 @@ const {
   updateEvent,
   getEvents,
   getEventsByDate,
+  getEventsByMonth,
 } = require("../controllers/eventController");
 
 const router = express.Router();
@@ -18,6 +19,8 @@ const router = express.Router();
 router.post("/", createEvent);
 
 router.get("/:date", getEventsByDate);
+
+router.get("/month/:month", getEventsByMonth);
 
 router.get("/", getAllEvents);
 

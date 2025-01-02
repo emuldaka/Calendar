@@ -55,6 +55,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   position: relative;
+  gap: 30px;
 }
 
 .cellText {
@@ -200,4 +201,8 @@ input[type="checkbox"] {
   margin: 0;
   font-size: 20px;
   text-align: center;
+}
+
+.resultDiv {
+  color: #00ff95;
 }
