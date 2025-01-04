@@ -15,7 +15,7 @@ export const useCurrentMonth = (currentTime) => {
   ];
 
   let monthSlice = currentTime;
-  console.log(monthSlice);
-  console.log(monthsOrdered[Number(monthSlice) - 1]);
+  // console.log(monthSlice);
+  // console.log(monthsOrdered[Number(monthSlice) - 1]);
   return monthsOrdered[Number(monthSlice) - 1];
 };

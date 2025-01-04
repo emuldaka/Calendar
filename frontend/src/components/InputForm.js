@@ -23,6 +23,8 @@ function InputForm() {
     setCellMonth,
     cellYear,
     setCellYear,
+    monthPagination,
+    yearPagination,
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
@@ -37,7 +39,9 @@ function InputForm() {
 
   async function fetchCurrentEvents() {
     const response = await fetch(
-      `http://localhost:5000/api/events/${cellYear}-${cellMonth}-${cellDay}`
+      `http://localhost:5000/api/events/${yearPagination}-${
+        monthPagination < 10 ? "0" + monthPagination : monthPagination
+      }-${cellDay}`
     );
     const json = await response.json();
     if (response.ok) {

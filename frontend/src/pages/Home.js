@@ -39,7 +39,7 @@ function Home() {
 
   useEffect(() => {
     fetchCurrentEvents(yearPagination, monthPagination);
-  }, [monthPagination, yearPagination]);
+  }, [monthPagination, yearPagination, emptyCellStartDates]);
 
   const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
@@ -49,11 +49,12 @@ function Home() {
   function handleClick(e) {
     e.preventDefault();
     console.log("button is clicked");
-    if (e.target.id < 10) {
-      setCellDay("0" + e.target.id.toString());
-    } else {
-      setCellDay(e.target.id);
-    }
+    // if (e.target.id < 10) {
+    //   setCellDay("0" + e.target.id.toString());
+    // } else {
+    //   setCellDay(e.target.id);
+    // }
+    setCellDay(e.target.id);
     setCellMonth(currentMonth);
     setCellYear(currentTime.substring(0, 4));
     setIsFormDisplayed(true);
@@ -91,7 +92,7 @@ function Home() {
         for (let i = 0; i < Object.keys(fetchResponse).length; i++) {
           arr.push(fetchResponse[i].date.substring(8, 10));
         }
-        console.log(arr);
+        console.log("fetched", arr);
         setMonthlyFetch(arr);
       }
     } catch (error) {
@@ -118,17 +119,12 @@ function Home() {
     for (let i = 1; i <= monthDays[monthPagination - 1]; i++) {
       let result = "";
       if (i < 10) {
-        let j = "0" + i.toString();
-
-        const count = monthlyFetch.filter((element) => element === j).length;
-        if (count > 0) {
-          result = count;
-        }
-      } else {
-        const count = monthlyFetch.filter((element) => element === i).length;
-        if (count > 0) {
-          result = count;
-        }
+        i = "0" + i.toString();
+      }
+      i = i.toString();
+      const count = monthlyFetch.filter((element) => element === i).length;
+      if (count > 0) {
+        result = count;
       }
 
       arr.push(
@@ -179,38 +175,51 @@ function Home() {
     }
   }
 
+  function isLastYearLeapYear() {
+    if ((yearPagination - 1) % 4 === 0 && (yearPagination - 1) % 100 === 0) {
+      if ((yearPagination - 1) % 400 === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (
+      (yearPagination - 1) % 4 === 0 &&
+      (yearPagination - 1) % 100 !== 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   function leftPagination() {
     console.log("left arrow clicked");
     let emptyCellsArr = [];
-    if (monthPagination === 1 && isNextYearLeapYear()) {
-      setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
-      setMonthPagination(12);
-      setYearPagination(yearPagination - 1);
-      for (let i = 0; i <= emptyCellStartDates.length; i++) {
-        if (emptyCellStartDates[i] > 2) {
-          emptyCellsArr.push(emptyCellStartDates[i] - 2);
-        }
-        if (emptyCellStartDates[i] === 1) {
-          emptyCellsArr.push(6);
-        }
-        if (emptyCellStartDates[i] === 2) {
-          emptyCellsArr.push(7);
-        }
-      }
-      setEmptyCellStartDates(emptyCellsArr);
-    } else if (monthPagination === 1 && isCurrentYearLeapYear()) {
+    if (monthPagination === 1 && isLastYearLeapYear()) {
       setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(12);
       setYearPagination(yearPagination - 1);
-      for (let i = 0; i <= emptyCellStartDates.length; i++) {
+      for (let i = 0; i < emptyCellStartDates.length; i++) {
+        if (emptyCellStartDates[i] > 1) {
+          emptyCellsArr.push(emptyCellStartDates[i] - 1);
+        } else if (emptyCellStartDates[i] === 1) {
+          emptyCellsArr.push(7);
+        }
+      }
+      emptyCellsArr[0] = emptyCellsArr[0] + 1;
+      emptyCellsArr[1] = emptyCellsArr[1] + 1;
+      setEmptyCellStartDates(emptyCellsArr);
+    } else if (monthPagination === 1 && isCurrentYearLeapYear()) {
+      setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
+      setMonthPagination(12);
+      setYearPagination(yearPagination - 1);
+      for (let i = 0; i < emptyCellStartDates.length; i++) {
         if (emptyCellStartDates[i] > 2) {
           emptyCellsArr.push(emptyCellStartDates[i] - 2);
-        }
-        if (emptyCellStartDates[i] === 1) {
-          emptyCellsArr.push(6);
-        }
-        if (emptyCellStartDates[i] === 2) {
+        } else if (emptyCellStartDates[i] === 2) {
           emptyCellsArr.push(7);
+        } else if (emptyCellStartDates[i] === 1) {
+          emptyCellsArr.push(6);
         }
       }
       setEmptyCellStartDates(emptyCellsArr);
@@ -218,11 +227,10 @@ function Home() {
       setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(12);
       setYearPagination(yearPagination - 1);
-      for (let i = 0; i <= emptyCellStartDates.length; i++) {
+      for (let i = 0; i < emptyCellStartDates.length; i++) {
         if (emptyCellStartDates[i] > 1) {
           emptyCellsArr.push(emptyCellStartDates[i] - 1);
-        }
-        if (emptyCellStartDates[i] === 1) {
+        } else if (emptyCellStartDates[i] === 1) {
           emptyCellsArr.push(7);
         }
       }
@@ -243,33 +251,32 @@ function Home() {
       setMonthPagination(1);
       setYearPagination(yearPagination + 1);
       for (let i = 0; i <= emptyCellStartDates.length; i++) {
-        if (emptyCellStartDates[i] > 2) {
-          emptyCellsArr.push(emptyCellStartDates[i] - 2);
+        if (emptyCellStartDates[i] < 6) {
+          emptyCellsArr.push(emptyCellStartDates[i] + 2);
         }
-        if (emptyCellStartDates[i] === 1) {
-          emptyCellsArr.push(6);
+        if (emptyCellStartDates[i] === 6) {
+          emptyCellsArr.push(1);
         }
-        if (emptyCellStartDates[i] === 2) {
-          emptyCellsArr.push(7);
+        if (emptyCellStartDates[i] === 7) {
+          emptyCellsArr.push(2);
         }
       }
+      emptyCellsArr[0] = emptyCellsArr[0] - 1;
+      emptyCellsArr[1] = emptyCellsArr[1] - 1;
       setEmptyCellStartDates(emptyCellsArr);
     } else if (monthPagination === 12 && isCurrentYearLeapYear()) {
       setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(1);
       setYearPagination(yearPagination + 1);
-
-      if (monthPagination === 12 && isNextYearLeapYear()) {
-        setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
-        setMonthPagination(1);
-        setYearPagination(yearPagination + 1);
-        for (let i = 0; i <= emptyCellStartDates.length; i++) {
-          if (emptyCellStartDates[i] < 7) {
-            emptyCellsArr.push(emptyCellStartDates[i] + 1);
-          }
-          if (emptyCellStartDates[i] === 7) {
-            emptyCellsArr.push(1);
-          }
+      for (let i = 0; i <= emptyCellStartDates.length; i++) {
+        if (emptyCellStartDates[i] < 6) {
+          emptyCellsArr.push(emptyCellStartDates[i] + 2);
+        }
+        if (emptyCellStartDates[i] === 6) {
+          emptyCellsArr.push(1);
+        }
+        if (emptyCellStartDates[i] === 7) {
+          emptyCellsArr.push(2);
         }
       }
       setEmptyCellStartDates(emptyCellsArr);
