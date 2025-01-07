@@ -37,6 +37,8 @@ function Home() {
 
   const [monthlyFetch, setMonthlyFetch] = useState([]);
 
+  const [currentCellDate, setCurrentCellDate] = useState("");
+
   useEffect(() => {
     fetchCurrentEvents(yearPagination, monthPagination);
   }, [monthPagination, yearPagination, emptyCellStartDates]);
@@ -45,6 +47,21 @@ function Home() {
     .toISOString()
     .slice(0, 16);
   setCurrentTime(now);
+
+  const monthsOrdered = [
+    "January",
+    "Febuary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   function handleClick(e) {
     e.preventDefault();
@@ -62,6 +79,10 @@ function Home() {
       .toISOString()
       .slice(0, 16);
     setCurrentTime(now);
+    setCurrentCellDate(
+      `${monthsOrdered[monthPagination - 1]} ${e.target.id} ${yearPagination}`
+    );
+    console.log("currentCellDate", currentCellDate);
     console.log(now);
     console.log(e.target.id);
   }
@@ -132,7 +153,7 @@ function Home() {
           <div className="cellTextContainer">
             <div className="cellText">{i}</div>
             <div className="resultDiv">
-              {result > 0 ? result + " Events" : ""}{" "}
+              {result === 1 ? `1 Event` : result > 0 ? `${result} Events` : ""}
             </div>
           </div>
           <button className="editButton" onClick={handleClick} id={i}>
@@ -301,20 +322,28 @@ function Home() {
     console.log(emptyCellStartDates);
   }
 
+  let currentMonthYearDisplay = `${useCurrentMonth(
+    monthPagination
+  )} ${yearPagination}`;
+
   return (
     <>
       <h2 className="title">CALENDAR </h2>
-      <div className="currentMonthCon">
-        <button className="pageLeft" onClick={leftPagination}>
-          <IoIosArrowBack size={20} />
-        </button>
-        <h2 className="currentMonth">
-          {useCurrentMonth(monthPagination)} {yearPagination}
-        </h2>
-        <button className="pageRight" onClick={rightPagination}>
-          <IoIosArrowForward size={20} />
-        </button>
-      </div>
+      {isFormDisplayed ? (
+        <div className="currentMonthCon2">{currentCellDate}</div>
+      ) : (
+        <>
+          <div className="currentMonthCon">
+            <button className="pageLeft" onClick={leftPagination}>
+              <IoIosArrowBack size={20} />
+            </button>
+            <h2 className="currentMonth">{currentMonthYearDisplay}</h2>
+            <button className="pageRight" onClick={rightPagination}>
+              <IoIosArrowForward size={20} />
+            </button>
+          </div>
+        </>
+      )}
 
       {isFormDisplayed ? (
         <InputForm />

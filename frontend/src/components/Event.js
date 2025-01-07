@@ -8,33 +8,28 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
   return (
     <>
       <div className="eventsArrayDiv">
-        <div>{title}</div>
+        <div className="eventTitle">{title}</div>
         <div className="eventsArrayDivDates" id={id}>
-          {dateSlice}
+          {/* {dateSlice} */}
         </div>
-        <div>{timeSlice}</div>
-        <input
-          className="checkbox-container"
-          type="checkbox"
-          checked={isChecked}
-          size={24}
-          value={title}
-          onChange={(e) => handleCheckClick(id, e.target.checked)}
-          style={{
-            height: 20,
-            width: 20,
-          }}
-        />
+        <div className="eventTime">
+          <div>{timeSlice}</div>
+          <input
+            className="checkbox-container"
+            type="checkbox"
+            checked={isChecked}
+            size={24}
+            value={title}
+            onChange={(e) => handleCheckClick(id, e.target.checked)}
+            style={{
+              height: 20,
+              width: 20,
+            }}
+          />
+        </div>
       </div>
     </>
   );
 }
 
 export default Event;
-
-// <h1 className="eventsTitle">Current events</h1>
-// <div className="deleteButtonContainer">
-//   <button className="delete" onClick={handleDeleteClick}>
-//     <MdDelete size={34} style={{ height: 40, width: 40 }} />
-//   </button>
-// </div>
