@@ -16,11 +16,8 @@ function Home() {
     setCurrentTime,
     currentMonth,
     setCurrentMonth,
-    cellDay,
     setCellDay,
-    cellMonth,
     setCellMonth,
-    cellYear,
     setCellYear,
     monthPagination,
     setMonthPagination,
@@ -66,11 +63,6 @@ function Home() {
   function handleClick(e) {
     e.preventDefault();
     console.log("button is clicked");
-    // if (e.target.id < 10) {
-    //   setCellDay("0" + e.target.id.toString());
-    // } else {
-    //   setCellDay(e.target.id);
-    // }
     setCellDay(e.target.id);
     setCellMonth(currentMonth);
     setCellYear(currentTime.substring(0, 4));
@@ -123,8 +115,6 @@ function Home() {
   }
 
   function emptyCells() {
-    // let startDates = [2, 5, 5, 1, 3, 6, 1, 4, 7, 2, 5, 7];
-
     let arr = [];
 
     for (let j = 1; j < emptyCellStartDates[monthPagination - 1]; j++) {

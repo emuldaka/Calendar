@@ -104,19 +104,28 @@ body {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
-  gap: 1rem;
-  padding: 1rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 
 .dayNames {
-  margin-left: 5rem;
-  margin-right: 5rem;
-  margin-top: 1rem;
-  width: 10rem;
-  text-align: center;
-  color: #00ff95;
-  font-size: 14px;
+  margin: 1%;
+  width: auto;
+  height: auto;
+  background: linear-gradient(145deg, #2d2a30, #1a181d);
+  color: #fff;
+  font-size: 24px;
   font-weight: bold;
+  border: 2px solid #ff00e6;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8);
+  display: flex;
+  text-align: start;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .formOuterContainer {
