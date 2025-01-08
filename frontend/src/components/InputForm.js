@@ -75,11 +75,12 @@ function InputForm() {
     console.log(checkedEvents);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     console.log(entryText + " @", dateTime);
-    eventSubmit(entryText, dateTime);
+    await eventSubmit(entryText, dateTime);
     fetchCurrentEvents();
+    // eventsArrayPopulator();
   }
 
   async function handleDeleteClick(e) {
