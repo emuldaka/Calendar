@@ -11,6 +11,8 @@ body {
   font-family: "Comic Sans MS", cursive, sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .title {
@@ -130,15 +132,42 @@ body {
 
 .formOuterContainer {
   display: flex;
+  width: 100%; /* Ensure full width of the parent */
+  height: 100%; /* Ensure full height of the parent */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
-.eventsContainer,
-.formContainer {
-  margin-left: 15rem;
-  margin-right: 15rem;
+.eventsContainer {
+  margin-left: 2rem;
+  margin-right: 2rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  width: 50rem;
+  width: 80rem;
+  height: 65rem;
+  background: linear-gradient(145deg, #1e1c23, #29262d);
+  align-items: center;
+  color: #fff;
+  font-size: 34px;
+  font-weight: bold;
+  border: 3px solid #00ff95;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
+  letter-spacing: 2px;
+  line-height: 2;
+  text-align: center;
+
+  /* Add overflow for scroll */
+  overflow-y: auto; /* Enable vertical scroll when content overflows */
+  padding-right: 10px; /* Optional: Add some padding for the scroll */
+}
+
+.formContainer {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 80rem;
   height: 65rem;
   background: linear-gradient(145deg, #1e1c23, #29262d);
   align-items: center;
@@ -191,15 +220,24 @@ input[type="checkbox"] {
 .eventsArrayDiv {
   display: flex;
   flex-direction: row;
-  width: 95%;
+  height: auto;
+  width: auto;
   justify-content: space-between;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border: 3px solid #00ff95;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
 }
 
 .eventTitle {
   text-align: left;
-  flex-grow: 1;
+  /* flex-grow: 1; */
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .eventsTime {
@@ -207,7 +245,8 @@ input[type="checkbox"] {
   align-items: center;
   gap: 10px;
   justify-content: flex-end;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  flex-direction: row;
 }
 
 .deleteButtonContainer {

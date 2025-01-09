@@ -1,19 +1,15 @@
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 
 function Event({ id, title, date, isChecked, handleCheckClick }) {
-  const dateSlice = date.substring(0, 10);
-
   const timeSlice = date.substring(11, 16);
 
   return (
     <>
       <div className="eventsArrayDiv">
         <div className="eventTitle">{title}</div>
-        <div className="eventsArrayDivDates" id={id}>
-          {/* {dateSlice} */}
-        </div>
+        <div className="eventsArrayDivDates" id={id}></div>
         <div className="eventTime">
-          <div>{timeSlice}</div>
+          {timeSlice}
           <input
             className="checkbox-container"
             type="checkbox"

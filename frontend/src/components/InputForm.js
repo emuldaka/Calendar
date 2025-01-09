@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
@@ -10,34 +10,18 @@ function InputForm() {
   const [dateTime, setDateTime] = useState("");
   const [entryText, setEntryText] = useState("");
   const [currentEvents, setCurrentEvents] = useState([]);
-  const { eventSubmit, error, isLoading } = useEventSubmit();
-  const [isChecked, setIsChecked] = useState(false);
+  const { eventSubmit } = useEventSubmit();
   const [checkedEvents, setCheckedEvents] = useState({});
-  const [currentMonth, setCurrentMonth] = useState();
   const {
     setIsFormDisplayed,
     currentTime,
     cellDay,
-    setCellDay,
-    cellMonth,
-    setCellMonth,
-    cellYear,
-    setCellYear,
     monthPagination,
     yearPagination,
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
-  useEffect(() => {
-    fetchCurrentEvents();
-  }, []);
-
-  useEffect(() => {
-    eventsArrayPopulator();
-    console.log(cellYear + "-" + cellMonth + "-" + cellDay);
-  }, [currentEvents, checkedEvents]);
-
-  async function fetchCurrentEvents() {
+  const fetchCurrentEvents = useCallback(async () => {
     const response = await fetch(
       `http://localhost:5000/api/events/${yearPagination}-${
         monthPagination < 10 ? "0" + monthPagination : monthPagination
@@ -47,13 +31,17 @@ function InputForm() {
     if (response.ok) {
       setCurrentEvents(json);
     }
-  }
+  }, [yearPagination, monthPagination, cellDay]);
+
+  useEffect(() => {
+    fetchCurrentEvents();
+  }, [fetchCurrentEvents]);
 
   function handleClick() {
     setIsFormDisplayed(false);
   }
 
-  function eventsArrayPopulator() {
+  const eventsArrayPopulator = useCallback(() => {
     const localEventsArray = currentEvents.map((event) => (
       <Event
         key={event._id}
@@ -65,22 +53,23 @@ function InputForm() {
       />
     ));
     setEventsArray(localEventsArray);
-  }
+  }, [currentEvents, checkedEvents]);
+
+  useEffect(() => {
+    eventsArrayPopulator();
+  }, [eventsArrayPopulator]);
 
   function handleCheckClick(id, isChecked) {
     setCheckedEvents((prev) => ({
       ...prev,
       [id]: isChecked,
     }));
-    console.log(checkedEvents);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(entryText + " @", dateTime);
     await eventSubmit(entryText, dateTime);
     fetchCurrentEvents();
-    // eventsArrayPopulator();
   }
 
   async function handleDeleteClick(e) {
@@ -93,17 +82,14 @@ function InputForm() {
       body: JSON.stringify({ data: [...idArray] }),
     });
     if (response.ok) {
-      console.log([...idArray]);
       fetchCurrentEvents();
-      console.log("OOOKAy");
     }
-    // console.log("events deleted");
   }
 
   function handleChange(e) {
     setDateTime(e.target.value);
   }
-  // console.log(currentMonth);
+
   return (
     <>
       <div className="formOuterContainer">
@@ -123,7 +109,7 @@ function InputForm() {
               value={entryText}
               required
             />
-            <label for="meeting-time">Choose your date:</label>
+            <label htmlFor="meeting-time">Choose your date:</label>
             <input
               type="datetime-local"
               id="meeting-time"
@@ -137,7 +123,7 @@ function InputForm() {
           </form>
         </div>
         <div className="eventsContainer">
-          Current events
+          <div className="eventsContainerTextTitle">Current events</div>
           <form className="deleteEvents">
             <button className="delete" onClick={handleDeleteClick}>
               <MdDelete size={34} style={{ height: 40, width: 40 }} />

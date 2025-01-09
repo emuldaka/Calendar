@@ -12,13 +12,8 @@ function Home() {
   const {
     isFormDisplayed,
     setIsFormDisplayed,
-    currentTime,
     setCurrentTime,
-    currentMonth,
-    setCurrentMonth,
     setCellDay,
-    setCellMonth,
-    setCellYear,
     monthPagination,
     setMonthPagination,
     yearPagination,
@@ -40,10 +35,12 @@ function Home() {
     fetchCurrentEvents(yearPagination, monthPagination);
   }, [monthPagination, yearPagination, emptyCellStartDates]);
 
-  const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-    .toISOString()
-    .slice(0, 16);
-  setCurrentTime(now);
+  useEffect(() => {
+    const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+    setCurrentTime(now);
+  }, [setCurrentTime]);
 
   const monthsOrdered = [
     "January",
@@ -62,10 +59,7 @@ function Home() {
 
   function handleClick(e) {
     e.preventDefault();
-    console.log("button is clicked");
     setCellDay(e.target.id);
-    setCellMonth(currentMonth);
-    setCellYear(currentTime.substring(0, 4));
     setIsFormDisplayed(true);
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -74,25 +68,15 @@ function Home() {
     setCurrentCellDate(
       `${monthsOrdered[monthPagination - 1]} ${e.target.id} ${yearPagination}`
     );
-    console.log("currentCellDate", currentCellDate);
-    console.log(now);
-    console.log(e.target.id);
   }
 
-  let monthSlice = currentTime.substring(5, 7);
-
-  setCurrentMonth(monthSlice);
-
   async function fetchCurrentEvents(yearPagination, monthPagination) {
-    console.log(yearPagination);
-    console.log(monthPagination);
     let month = 0;
     if (Number(monthPagination) < 10) {
       month = "0" + monthPagination.toString();
     } else {
       month = monthPagination;
     }
-    console.log(month);
 
     try {
       const response = await fetch(
@@ -105,11 +89,9 @@ function Home() {
         for (let i = 0; i < Object.keys(fetchResponse).length; i++) {
           arr.push(fetchResponse[i].date.substring(8, 10));
         }
-        console.log("fetched", arr);
         setMonthlyFetch(arr);
       }
     } catch (error) {
-      console.log(error);
       return false;
     }
   }
@@ -119,7 +101,7 @@ function Home() {
 
     for (let j = 1; j < emptyCellStartDates[monthPagination - 1]; j++) {
       arr.push(
-        <div className="cell">
+        <div className="cell" key={j}>
           <div className="cellTextContainer">
             <div className="cellText"></div>
           </div>
@@ -204,7 +186,6 @@ function Home() {
   }
 
   function leftPagination() {
-    console.log("left arrow clicked");
     let emptyCellsArr = [];
     if (monthPagination === 1 && isLastYearLeapYear()) {
       setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
@@ -255,7 +236,6 @@ function Home() {
   }
 
   function rightPagination() {
-    console.log("right arrow clicked");
     let emptyCellsArr = [];
     if (monthPagination === 12 && isNextYearLeapYear()) {
       setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
@@ -307,9 +287,6 @@ function Home() {
     } else {
       setMonthPagination(monthPagination + 1);
     }
-    console.log(monthPagination);
-    console.log(emptyCellsArr);
-    console.log(emptyCellStartDates);
   }
 
   let currentMonthYearDisplay = `${useCurrentMonth(
@@ -340,13 +317,27 @@ function Home() {
       ) : (
         <>
           <div className="days">
-            <div className="dayNames">Monday</div>
-            <div className="dayNames">Tuesday</div>
-            <div className="dayNames">Wednesday</div>
-            <div className="dayNames">Thursday</div>
-            <div className="dayNames">Friday</div>
-            <div className="dayNames">Saturday</div>
-            <div className="dayNames">Sunday</div>
+            <div className="dayNames" key="Monday">
+              Monday
+            </div>
+            <div className="dayNames" key="Tuesday">
+              Tuesday
+            </div>
+            <div className="dayNames" key="Wednesday">
+              Wednesday
+            </div>
+            <div className="dayNames" key="Thursday">
+              Thursday
+            </div>
+            <div className="dayNames" key="Friday">
+              Friday
+            </div>
+            <div className="dayNames" key="Saturday">
+              Saturday
+            </div>
+            <div className="dayNames" key="Sunday">
+              Sunday
+            </div>
           </div>
           <div className="grid-container">{emptyCells()}</div>
         </>
