@@ -9,7 +9,7 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
         <div className="eventTitle">{title}</div>
         <div className="eventsArrayDivDates" id={id}></div>
         <div className="eventTime">
-          {timeSlice}
+          <span className="timeSlice">{timeSlice}</span>
           <input
             className="checkbox-container"
             type="checkbox"

@@ -204,26 +204,27 @@ body {
 .currentEvents {
   display: flex;
   flex-direction: column;
+  font-family: "Montserrat", sans-serif;
 }
 
 .checkbox-container {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: center; /* Vertically align the checkbox with the time */
+  justify-content: flex-start; /* Align items to the left */
+  margin-right: 1rem;
 }
 
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
+  margin-left: 10px; /* Space to the left of checkbox */
 }
 
 .eventsArrayDiv {
   display: flex;
-  flex-direction: row;
-  height: auto;
-  width: auto;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: row; /* Ensures items are in a row */
+  justify-content: space-between; /* Add space between the title and the time/checkbox */
+  align-items: center; /* Align the items vertically */
   margin-left: 2rem;
   margin-right: 2rem;
   border: 3px solid #00ff95;
@@ -240,13 +241,15 @@ input[type="checkbox"] {
   margin-right: 1rem;
 }
 
-.eventsTime {
+.eventTime {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-content: flex-end;
-  /* white-space: nowrap; */
-  flex-direction: row;
+  flex-direction: row; /* Aligns the time and checkbox horizontally */
+  align-items: center; /* Vertically center them */
+  gap: 10px; /* Space between the time slice and checkbox */
+}
+
+.timeSlice {
+  font-size: 20px; /* Adjusts the font size for the time */
 }
 
 .deleteButtonContainer {
@@ -297,7 +300,66 @@ input[type="checkbox"] {
   font-size: 18px;
 }
 
+/* Style the scrollbar container */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the vertical scrollbar */
+  height: 12px; /* Height of the horizontal scrollbar */
+}
+
+/* Style the scrollbar track (background) */
+::-webkit-scrollbar-track {
+  background: #29262d; /* Dark theme background for track */
+  border-radius: 10px; /* Rounded corners for track */
+}
+
+/* Style the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #00ff95; /* Bright color for the thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 3px solid #1e1c23; /* Dark border to add contrast */
+}
+
+/* Style the thumb when hovered */
+::-webkit-scrollbar-thumb:hover {
+  background: #00d67d; /* Slightly darker green on hover */
+}
+
+/* Optional: Horizontal scrollbar styling */
+::-webkit-scrollbar-horizontal {
+  height: 10px; /* Height for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #00ff95; /* Same color for horizontal thumb */
+}
+
+::-webkit-scrollbar-track:horizontal {
+  background: #29262d; /* Same dark background for horizontal track */
+}
+
 /* Media Queries for responsiveness */
+
+@media (max-width: 1921px) {
+  .cell {
+    margin: 1%;
+    width: auto;
+    height: 140px;
+    background: linear-gradient(145deg, #2d2a30, #1a181d);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    border: 2px solid #ff00e6;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8);
+    display: flex;
+    text-align: start;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+}
 
 /* For mobile screens */
 @media (max-width: 768px) {
