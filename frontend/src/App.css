@@ -343,7 +343,7 @@ input[type="checkbox"] {
   .cell {
     margin: 1%;
     width: auto;
-    height: 140px;
+    height: 100px;
     background: linear-gradient(145deg, #2d2a30, #1a181d);
     color: #fff;
     font-size: 24px;
@@ -358,6 +358,47 @@ input[type="checkbox"] {
     align-items: center;
     position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .eventsContainer,
+  .formContainer {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    width: 100%; /* Ensure it takes up full width on smaller screens */
+    height: 40rem;
+  }
+
+  .cellTextContainer {
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .cellText {
+    flex-direction: column;
+    top: 0;
+    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .editButton {
+    margin-bottom: 0.3rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #00ff95;
+    color: #191a00;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+
+  .resultDiv {
+    color: #ff00e6;
+    font-weight: bold;
+    font-size: 18px;
   }
 }
 
