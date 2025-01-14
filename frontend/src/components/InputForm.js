@@ -94,7 +94,7 @@ function InputForm() {
     <>
       <div className="formOuterContainer">
         <div className="formContainer">
-          <div>Event Entry</div>
+          <div className="EventEntryTitle">Event Entry</div>
           <button className="homeButton" onClick={handleClick}>
             <AiFillHome size={34} style={{ height: 40, width: 40 }} />
           </button>

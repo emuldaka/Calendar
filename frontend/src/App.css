@@ -8,7 +8,7 @@
 body {
   background: radial-gradient(circle, #1f1b24, #090909);
   color: #fff;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: "Poppins";
   margin: 0;
   padding: 0;
   display: flex;
@@ -183,7 +183,7 @@ body {
 }
 
 .addEntry {
-  font-size: 34px;
+  font-size: 74px;
   display: flex;
   text-align: start;
   flex-direction: column;
@@ -191,6 +191,18 @@ body {
   align-items: center;
   position: relative;
   color: #ff00e6;
+}
+input[type="datetime-local"],
+input[type="submit"],
+input[type="text"] {
+  height: 60px;
+  width: 800px;
+  font-size: 44px;
+  font-family: "Poppins";
+}
+
+.EventEntryTitle {
+  font-size: 84px;
 }
 
 .eventsTitle {
