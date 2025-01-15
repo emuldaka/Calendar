@@ -99,7 +99,7 @@ function InputForm() {
             <AiFillHome size={34} style={{ height: 40, width: 40 }} />
           </button>
           <form className="addEntry" onSubmit={handleSubmit}>
-            <label className="addEvent">Add Event:</label>
+            <label className="addEvent">Event Description</label>
             <input
               className="addEventText"
               type="text"
@@ -109,7 +109,9 @@ function InputForm() {
               value={entryText}
               required
             />
-            <label htmlFor="meeting-time">Choose your date:</label>
+            <label htmlFor="meeting-time" className="dateSelection">
+              Date Selection
+            </label>
             <input
               type="datetime-local"
               id="meeting-time"
