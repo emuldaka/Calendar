@@ -127,10 +127,11 @@ function Home() {
             <div className="resultDiv">
               {result === 1 ? `1 Event` : result > 0 ? `${result} Events` : ""}
             </div>
+
+            <button className="editButton" onClick={handleClick} id={i}>
+              View/Edit
+            </button>
           </div>
-          <button className="editButton" onClick={handleClick} id={i}>
-            View/Edit
-          </button>
         </div>
       );
     }
