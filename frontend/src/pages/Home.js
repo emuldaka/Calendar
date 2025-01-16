@@ -296,7 +296,7 @@ function Home() {
 
   return (
     <>
-      <h2 className="title">CALENDAR </h2>
+      {/* <h2 className="title">CALENDAR </h2> */}
       {isFormDisplayed ? (
         <div className="currentMonthCon2">{currentCellDate}</div>
       ) : (

@@ -302,6 +302,8 @@ textarea.eventTitle {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
 }
 
 .currentMonthCon2 {
@@ -312,6 +314,7 @@ textarea.eventTitle {
   color: #ff00e6;
   font-size: larger;
   margin-bottom: 2rem;
+  margin-top: 3rem;
 }
 
 .pageLeft,
