@@ -3,6 +3,7 @@
   width: 90%; /* This will make the root container take up 90% of the screen width */
   height: 90%; /* This will make the root container take up 90% of the screen height */
   margin: 0 auto; /* This centers the container horizontally */
+  user-select: none;
 }
 
 body {
@@ -32,6 +33,14 @@ body {
 }
 
 .grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: auto;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto;
@@ -200,6 +209,7 @@ body {
   align-items: center;
   position: relative;
   color: #ff00e6;
+  font-size: medium;
 }
 input[type="datetime-local"],
 input[type="submit"],
@@ -219,11 +229,11 @@ input[type="text"],
   align-items: center;
   position: relative;
   color: #ff00e6;
-  font-size: large;
+  font-size: medium;
 }
 
 .EventEntryTitle {
-  font-size: 84px;
+  font-size: medium;
 }
 
 .eventsTitle {
@@ -257,7 +267,7 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: row; /* Ensures items are in a row */
   justify-content: space-between; /* Add space between the title and the time/checkbox */
-  align-items: center; /* Align the items vertically */
+  align-items: flex-start; /* Align items at the top of the container */
   margin-left: 2rem;
   margin-right: 2rem;
   border: 3px solid #00ff95;
@@ -265,6 +275,21 @@ input[type="checkbox"] {
   margin-bottom: 1rem;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
+  height: 100%;
+  min-height: 50px;
+  max-height: 200px;
+  overflow-y: visible;
+}
+
+textarea.eventTitle {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  resize: none;
 }
 
 .eventTitle {
@@ -304,6 +329,7 @@ input[type="checkbox"] {
   justify-content: center;
   gap: 10px;
   color: #ff00e6;
+  font-size: larger;
 }
 
 .pageLeft,
@@ -429,87 +455,69 @@ input[type="checkbox"] {
   }
 }
 
-/* For mobile screens */
-@media (max-width: 768px) {
-  .grid-container {
-    margin-left: 2rem;
-    margin-right: 2rem;
+@media (max-width: 1350px) {
+  .dayNames {
+    font-size: 16px;
   }
-
   .cell {
-    width: 15rem; /* Make cells smaller */
-    height: 8rem; /* Adjust height for smaller screens */
-    font-size: 18px; /* Smaller font size */
-    margin: 1rem; /* Adjust margins */
-  }
-
-  .formOuterContainer {
-    flex-direction: column;
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
-
-  .eventsContainer,
-  .formContainer {
-    margin-left: 2rem;
-    margin-right: 2rem;
-    width: 100%; /* Ensure it takes up full width on smaller screens */
-  }
-
-  .eventsArrayDiv {
-    flex-direction: column; /* Stack the items vertically */
-    align-items: center;
-  }
-
-  .eventTitle,
-  .eventsTime {
-    font-size: 18px; /* Reduce font size */
-  }
-
-  .checkbox-container {
-    justify-content: center; /* Center the checkbox */
-  }
-
-  .pageLeft,
-  .pageRight {
-    font-size: 14px; /* Reduce button font size */
-    padding: 3px 8px;
-  }
-
-  .currentMonthCon,
-  .currentMonthCon2 {
-    flex-direction: column;
+    height: auto;
   }
 }
 
-/* For very small screens (smartphones in portrait mode) */
-@media (max-width: 480px) {
-  .grid-container {
-    margin-left: 1rem;
-    margin-right: 1rem;
+@media (max-width: 935px) {
+  .dayNames {
+    font-size: 12px;
   }
-
-  .cell {
-    width: 12rem;
-    height: 7rem;
-    font-size: 16px;
-    margin: 0.5rem;
+  .cellText {
+    font-size: 12px;
   }
-
-  .eventsContainer,
-  .formContainer {
-    margin-left: 1rem;
-    margin-right: 1rem;
+  .resultDiv {
+    font-size: 12px;
   }
-
-  .eventTitle,
-  .eventsTime {
-    font-size: 16px; /* Even smaller font size */
+  .editButton {
+    border-radius: 0px;
+    font-size: 12px;
+    padding: 0.1rem 0.1rem;
   }
+}
 
-  .pageLeft,
-  .pageRight {
-    font-size: 12px; /* Even smaller button font */
-    padding: 3px 6px;
+@media (max-width: 763px) {
+  .dayNames {
+    font-size: 8px;
+  }
+}
+
+/* For mobile screens */
+@media (max-width: 660px) {
+  .dayNames {
+    font-size: 6px;
+  }
+  .cellText {
+    font-size: 8px;
+  }
+  .resultDiv {
+    font-size: 8px;
+  }
+  .editButton {
+    border-radius: 0px;
+    font-size: 8px;
+    padding: 0.1rem 0.1rem;
+  }
+}
+
+@media (max-width: 511px) {
+  .dayNames {
+    font-size: 4px;
+  }
+  .cellText {
+    font-size: 6px;
+  }
+  .resultDiv {
+    font-size: 6px;
+  }
+  .editButton {
+    border-radius: 0px;
+    font-size: 6px;
+    padding: 0.1rem 0.1rem;
   }
 }

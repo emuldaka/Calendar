@@ -6,7 +6,11 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
   return (
     <>
       <div className="eventsArrayDiv">
-        <div className="eventTitle">{title}</div>
+        <textarea
+          className="eventTitle"
+          value={title}
+          rows={title.length / 44} // Keep it as a single-line input (you can adjust as needed)
+        />
         <div className="eventsArrayDivDates" id={id}></div>
         <div className="eventTime">
           <span className="timeSlice">{timeSlice}</span>
