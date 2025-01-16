@@ -13,7 +13,9 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .title {
@@ -154,13 +156,13 @@ body {
   justify-content: center; /* Vertically center the items */
   align-items: center; /* Horizontally center the items */
   width: 100%; /* Full width of the parent */
-  height: 100vh; /* Ensure it takes full height of the viewport */
+  height: 100%; /* Ensure it takes full height of the viewport */
   font-size: large;
 }
 
 .formContainer,
 .eventsContainer {
-  width: 80%; /* Use percentage width for responsiveness */
+  width: 30%; /* Use percentage width for responsiveness */
   max-width: 80rem; /* Maximum width for larger screens */
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -228,7 +230,7 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
-  height: 350px;
+  height: 600px;
   overflow-y: auto; /* Enable vertical scroll when content overflows */
 }
 
@@ -247,9 +249,9 @@ input[type="checkbox"] {
 
 .eventsArrayDiv {
   display: flex;
-  flex-direction: row; /* Ensures items are in a row */
-  justify-content: space-between; /* Add space between the title and the time/checkbox */
-  align-items: flex-start; /* Align items at the top of the container */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-left: 2rem;
   margin-right: 2rem;
   border: 3px solid #00ff95;
@@ -259,7 +261,7 @@ input[type="checkbox"] {
   box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
   min-height: 50px;
   max-height: 200px;
-  overflow-y: visible;
+  overflow-y: hidden; /* Hide overflow in container */
 }
 
 textarea.eventTitle {
@@ -270,7 +272,14 @@ textarea.eventTitle {
   font-size: 20px;
   font-weight: bold;
   resize: none; /* Disable manual resizing */
-  overflow: hidden; /* Hide overflow to prevent scrollbars */
+  /* overflow: hidden;  */
+  padding: 0.5rem;
+  min-height: 50px;
+  overflow-wrap: break-word;
+}
+
+textarea.eventTitle:focus {
+  outline: none; /* Remove focus outline */
 }
 
 .eventTitle {
@@ -398,14 +407,6 @@ textarea.eventTitle {
     transition: transform 0.3s, box-shadow 0.3s;
   }
 
-  .eventsContainer,
-  .formContainer {
-    margin-left: 2rem;
-    margin-right: 2rem;
-    width: 100%; /* Ensure it takes up full width on smaller screens */
-    height: 40rem;
-  }
-
   .cellTextContainer {
     width: 100%;
     height: 100%;
@@ -446,6 +447,10 @@ textarea.eventTitle {
   }
   .cell {
     height: auto;
+  }
+  .formContainer,
+  .eventsContainer {
+    width: 80%;
   }
 }
 
@@ -504,5 +509,98 @@ textarea.eventTitle {
     border-radius: 0px;
     font-size: 6px;
     padding: 0.1rem 0.1rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .dayNames {
+    font-size: 3px;
+  }
+  .cellText {
+    font-size: 4px;
+  }
+  .resultDiv {
+    font-size: 4px;
+  }
+  .editButton {
+    border-radius: 0px;
+    font-size: 4px;
+    padding: 0.1rem 0.1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .dayNames {
+    font-size: 2px;
+  }
+  .cellText {
+    font-size: 3px;
+  }
+  .resultDiv {
+    font-size: 3px;
+  }
+  .editButton {
+    border-radius: 0px;
+    font-size: 3px;
+    padding: 0.1rem 0.1rem;
+  }
+}
+
+@media (max-height: 1280px) {
+  .currentEvents {
+    height: 525px;
+  }
+}
+@media (max-height: 1188px) {
+  .currentEvents {
+    height: 487px;
+  }
+}
+
+@media (max-height: 1080px) {
+  .currentEvents {
+    height: 442px;
+  }
+}
+
+@media (max-height: 980px) {
+  .currentEvents {
+    height: 360px;
+  }
+}
+
+@media (max-height: 850px) {
+  .currentEvents {
+    height: 300px;
+  }
+}
+
+@media (max-height: 721px) {
+  .currentEvents {
+    height: 250px;
+  }
+}
+
+@media (max-height: 650px) {
+  .currentEvents {
+    height: 210px;
+  }
+}
+
+@media (max-height: 580px) {
+  .currentEvents {
+    height: 187px;
+  }
+}
+
+@media (max-height: 500px) {
+  .currentEvents {
+    height: 145px;
+  }
+}
+
+@media (max-height: 420px) {
+  .currentEvents {
+    height: 122px;
   }
 }
