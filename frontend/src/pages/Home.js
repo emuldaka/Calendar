@@ -96,8 +96,22 @@ function Home() {
     }
   }
 
+  function doubleDigitFormatting(number) {
+    let result = "";
+    if (number < 10) {
+      result = "0" + number.toString();
+    } else {
+      result = number.toString();
+    }
+    console.log(result);
+    return result;
+  }
+
   function emptyCells() {
     let arr = [];
+
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0]; // Extracts the date part (YYYY-MM-DD)
 
     for (let j = 1; j < emptyCellStartDates[monthPagination - 1]; j++) {
       arr.push(
@@ -123,7 +137,33 @@ function Home() {
       arr.push(
         <div className="cell" key={i}>
           <div className="cellTextContainer">
-            <div className="cellText">{i}</div>
+            {formattedDate ===
+            `${yearPagination}-${doubleDigitFormatting(
+              monthPagination
+            )}-${i}` ? (
+              <div
+                className="cellText"
+                style={{
+                  color: "white",
+                  textShadow:
+                    "1px 1px 0 #ff00e6, -1px -1px 0 #ff00e6, 1px -1px 0 #ff00e6, -1px 1px 0 #ff00e6",
+                }}
+                size={40}
+              >
+                {i}
+              </div>
+            ) : (
+              <div className="cellText">{i}</div>
+            )}
+            {formattedDate ===
+            `${yearPagination}-${doubleDigitFormatting(
+              monthPagination
+            )}-${i}` ? (
+              <div className="today">TODAY</div>
+            ) : (
+              <div></div>
+            )}
+
             <div className="resultDiv">
               {result === 1 ? `1 Event` : result > 0 ? `${result} Events` : ""}
             </div>
