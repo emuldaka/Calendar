@@ -68,7 +68,7 @@ body {
   position: relative;
   transition: transform 0.3s, box-shadow 0.3s;
   justify-content: center; /* Vertically center the content within the cell */
-  height: 150px; /* Ensure a minimum height for each cell */
+  height: 190px; /* Ensure a minimum height for each cell */
 }
 
 .cell:hover {
@@ -176,7 +176,9 @@ body {
   letter-spacing: 2px;
   line-height: 2;
   text-align: center;
+}
 
+.eventsContainer {
   padding-right: 10px; /* Optional: Add some padding for the scroll */
 }
 
@@ -195,10 +197,14 @@ input[type="submit"],
 input[type="text"],
 .dateSelection {
   height: 100%;
-  width: 98%;
+  width: 95%;
   font-size: small;
   font-family: "Poppins";
+  margin-left: 1rem;
+  margin-right: 1rem;
+  justify-content: center;
 }
+
 input[type="submit"] {
   margin-bottom: 1rem;
 }
@@ -230,8 +236,29 @@ input[type="submit"] {
   display: flex;
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
-  height: 600px;
+  height: 800px;
   overflow-y: auto; /* Enable vertical scroll when content overflows */
+}
+
+.deleteDiv {
+  display: flex;
+  justify-content: space-between; /* Ensures spacing between the title and the button */
+  align-items: center; /* Vertically centers the items */
+  margin-top: 0.5rem;
+}
+
+.delete {
+  align-self: flex-end;
+  margin-right: 2.75rem;
+}
+
+.eventsContainerTextTitle {
+  font-size: small;
+  margin: 0.5rem;
+  text-align: center; /* Ensures the text is centered */
+  flex-grow: 1; /* Allows the title to take up the available space and stay centered */
+  padding-left: 4rem;
+  margin-left: 4rem;
 }
 
 .checkbox-container {
@@ -259,7 +286,7 @@ input[type="checkbox"] {
   margin-bottom: 1rem;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
-  min-height: 50px;
+  min-height: 60px;
   max-height: 200px;
   overflow-y: hidden; /* Hide overflow in container */
 }
@@ -298,12 +325,6 @@ textarea.eventTitle:focus {
 
 .timeSlice {
   font-size: 20px; /* Adjusts the font size for the time */
-}
-
-.deleteButtonContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .currentMonthCon {
@@ -546,14 +567,17 @@ textarea.eventTitle:focus {
   }
 }
 
-@media (max-height: 1280px) {
+@media (max-height: 1278px) {
   .currentEvents {
-    height: 525px;
+    height: 700px;
   }
 }
 @media (max-height: 1188px) {
   .currentEvents {
     height: 487px;
+  }
+  .cell {
+    height: 125px;
   }
 }
 

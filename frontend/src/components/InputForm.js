@@ -125,11 +125,13 @@ function InputForm() {
           </form>
         </div>
         <div className="eventsContainer">
-          <div className="eventsContainerTextTitle">Current events</div>
           <form className="deleteEvents">
-            <button className="delete" onClick={handleDeleteClick}>
-              <MdDelete size={34} style={{ height: 40, width: 40 }} />
-            </button>
+            <div className="deleteDiv">
+              <div className="eventsContainerTextTitle">Current events</div>
+              <button className="delete" onClick={handleDeleteClick}>
+                <MdDelete size={34} style={{ height: 40, width: 40 }} />
+              </button>
+            </div>
             <div className="currentEvents">{eventsArray}</div>
           </form>
         </div>
