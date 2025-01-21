@@ -7,6 +7,7 @@ const CalendarContextProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState("");
   const [cellMonth, setCellMonth] = useState("");
   const [cellDay, setCellDay] = useState("");
+
   const [monthPagination, setMonthPagination] = useState(
     Number(
       new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -15,6 +16,7 @@ const CalendarContextProvider = ({ children }) => {
         .substring(5, 7)
     )
   );
+
   const [yearPagination, setYearPagination] = useState(
     Number(
       new Date(Date.now() - new Date().getTimezoneOffset() * 60000)

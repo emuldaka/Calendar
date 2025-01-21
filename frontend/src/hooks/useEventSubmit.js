@@ -8,10 +8,13 @@ export const useEventSubmit = () => {
     setIsLoading(true);
     setError(null);
 
+    const localDate = new Date(date); // `date` is in UTC
+    const localDateString = localDate.toISOString().slice(0, 16);
+
     const response = await fetch("http://localhost:5000/api/events", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, date }),
+      body: JSON.stringify({ title, date: localDateString }),
     });
     const json = await response.json();
 

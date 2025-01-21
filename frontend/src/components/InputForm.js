@@ -42,7 +42,13 @@ function InputForm() {
   }
 
   const eventsArrayPopulator = useCallback(() => {
-    const localEventsArray = currentEvents.map((event) => (
+    // Sort the events by date before mapping
+    const sortedEvents = [...currentEvents].sort((a, b) => {
+      // Compare dates as Date objects (ascending order)
+      return new Date(a.date) - new Date(b.date);
+    });
+
+    const localEventsArray = sortedEvents.map((event) => (
       <Event
         key={event._id}
         id={event._id}
@@ -52,6 +58,7 @@ function InputForm() {
         handleCheckClick={(id, isChecked) => handleCheckClick(id, isChecked)}
       />
     ));
+
     setEventsArray(localEventsArray);
   }, [currentEvents, checkedEvents]);
 
@@ -68,7 +75,11 @@ function InputForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await eventSubmit(entryText, dateTime);
+    let date = new Date(
+      new Date(dateTime).getTime() - 12 * 60 * 60 * 1000
+    ).toISOString();
+
+    await eventSubmit(entryText, date);
     fetchCurrentEvents();
   }
 

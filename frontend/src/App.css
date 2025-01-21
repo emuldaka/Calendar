@@ -192,7 +192,7 @@ body {
   color: #ff00e6;
   font-size: medium;
 }
-input[type="datetime-local"],
+/* input[type="datetime-local"],
 input[type="submit"],
 input[type="text"],
 .dateSelection {
@@ -203,6 +203,124 @@ input[type="text"],
   margin-left: 1rem;
   margin-right: 1rem;
   justify-content: center;
+} */
+
+/* Form input styles to match the dark theme */
+input[type="datetime-local"],
+input[type="submit"],
+input[type="text"] {
+  height: 100%;
+  width: 95%;
+  font-size: small;
+  font-family: "Poppins";
+  margin-left: 1rem;
+  margin-right: 1rem;
+  justify-content: center;
+  padding: 0.5rem;
+  background: linear-gradient(
+    145deg,
+    #2d2a30,
+    #1a181d
+  ); /* Matches dark gradient background */
+  color: #fff; /* White text color */
+  border: 2px solid #00ff95; /* Green border to align with the color theme */
+  border-radius: 10px; /* Rounded corners for inputs */
+  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8); /* Light purple glow around the inputs */
+  transition: all 0.3s ease; /* Smooth transition for hover/focus effects */
+}
+
+.dateSelection {
+  height: 100%;
+  width: 95%;
+  font-size: small;
+  font-family: "Poppins";
+  margin-left: 1rem;
+  margin-right: 1rem;
+  justify-content: center;
+  padding: 0.5rem;
+  color: black; /* White text color */
+}
+
+/* Focus effect for input fields */
+input[type="datetime-local"]:focus,
+input[type="submit"]:focus,
+input[type="text"]:focus {
+  outline: none; /* Removes the default focus outline */
+  box-shadow: 0 0 10px #00ff95; /* Green glow on focus */
+  border-color: #00ff95; /* Green border when focused */
+}
+
+/* Specific styling for the submit button to match the rest of the theme */
+input[type="submit"] {
+  background: linear-gradient(
+    145deg,
+    #00ff95,
+    #00d67d
+  ); /* Green gradient background */
+  color: #191a00; /* Dark color for the text inside submit button */
+  border: none; /* Removes the border */
+  padding: 0.5rem 1rem;
+  font-size: medium;
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 255, 149, 0.8); /* Light green glow around the button */
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for submit button */
+input[type="submit"]:hover {
+  background: linear-gradient(
+    145deg,
+    #00d67d,
+    #00ff95
+  ); /* Inverse the gradient on hover */
+  box-shadow: 0 0 15px #00ff95; /* Intensify the glow on hover */
+}
+
+/* Styling for the .dateSelection container to make it consistent with the theme */
+.dateSelection {
+  display: flex;
+  text-align: start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  color: black; /* Light pink color for text */
+  font-size: medium;
+  background: #00d67d; /* Solid dark background matching the dark theme */
+  padding: 0.5rem;
+
+  border-radius: 10px;
+}
+
+/* Styling for the text input (text field) */
+input[type="text"] {
+  background: linear-gradient(
+    145deg,
+    #2d2a30,
+    #1a181d
+  ); /* Matches the background of other inputs */
+  color: #fff; /* White text */
+  border: 2px solid #00ff95; /* Green border */
+  padding: 0.5rem;
+  font-size: medium;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8); /* Light purple glow */
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  outline: none; /* Removes the default focus outline */
+  box-shadow: 0 0 10px #00ff95; /* Green glow on focus */
+  border-color: #00ff95; /* Green border when focused */
+}
+
+/* Optional: Input styling on hover */
+input[type="text"]:hover,
+input[type="datetime-local"]:hover,
+input[type="submit"]:hover {
+  transform: scale(1.05); /* Slightly scale up on hover */
+  box-shadow: 0 0 20px #ff00e6; /* Light glow on hover */
 }
 
 input[type="submit"] {
@@ -216,7 +334,7 @@ input[type="submit"] {
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  color: #ff00e6;
+  color: black;
   font-size: medium;
 }
 
@@ -325,6 +443,13 @@ textarea.eventTitle:focus {
 
 .timeSlice {
   font-size: 20px; /* Adjusts the font size for the time */
+  display: flex; /* Use flexbox to align the content */
+  justify-content: center; /* Centers the text horizontally */
+  align-items: center; /* Centers the text vertically */
+  white-space: nowrap; /* Prevents wrapping of text */
+  overflow: hidden; /* Hides anything overflowing */
+  text-overflow: ellipsis; /* Adds "..." if the text overflows */
+  height: 100%; /* Ensures it fills the full height of the container */
 }
 
 .currentMonthCon {
@@ -473,6 +598,9 @@ textarea.eventTitle:focus {
   .eventsContainer {
     width: 80%;
   }
+  .today {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 935px) {
@@ -490,10 +618,16 @@ textarea.eventTitle:focus {
     font-size: 12px;
     padding: 0.1rem 0.1rem;
   }
+  .today {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 763px) {
   .dayNames {
+    font-size: 8px;
+  }
+  .today {
     font-size: 8px;
   }
 }
@@ -514,6 +648,9 @@ textarea.eventTitle:focus {
     font-size: 8px;
     padding: 0.1rem 0.1rem;
   }
+  .today {
+    font-size: 6px;
+  }
 }
 
 @media (max-width: 511px) {
@@ -531,6 +668,9 @@ textarea.eventTitle:focus {
     font-size: 6px;
     padding: 0.1rem 0.1rem;
   }
+  .today {
+    font-size: 4px;
+  }
 }
 
 @media (max-width: 430px) {
@@ -547,6 +687,9 @@ textarea.eventTitle:focus {
     border-radius: 0px;
     font-size: 4px;
     padding: 0.1rem 0.1rem;
+  }
+  .today {
+    font-size: 3px;
   }
 }
 

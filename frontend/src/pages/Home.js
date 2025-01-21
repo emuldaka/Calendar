@@ -103,7 +103,6 @@ function Home() {
     } else {
       result = number.toString();
     }
-    console.log(result);
     return result;
   }
 
