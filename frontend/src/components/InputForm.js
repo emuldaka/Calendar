@@ -5,9 +5,9 @@ import { CalendarContext } from "../contexts/CalendarContext";
 import { useEventSubmit } from "../hooks/useEventSubmit";
 import Event from "./Event";
 import { MdDelete } from "react-icons/md";
+import { DateSelecter } from "./DateSelecter";
 
 function InputForm() {
-  const [dateTime, setDateTime] = useState("");
   const [entryText, setEntryText] = useState("");
   const [currentEvents, setCurrentEvents] = useState([]);
   const { eventSubmit } = useEventSubmit();
@@ -18,6 +18,8 @@ function InputForm() {
     cellDay,
     monthPagination,
     yearPagination,
+    dateTime,
+    setDateTime,
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
@@ -78,8 +80,9 @@ function InputForm() {
     let date = new Date(
       new Date(dateTime).getTime() - 12 * 60 * 60 * 1000
     ).toISOString();
-
+    console.log(e);
     await eventSubmit(entryText, date);
+    alert("Event Sent!");
     fetchCurrentEvents();
   }
 
@@ -116,22 +119,12 @@ function InputForm() {
               type="text"
               name=""
               id=""
+              placeholder="Enter Event"
               onChange={(e) => setEntryText(e.target.value)}
               value={entryText}
               required
             />
-            <label htmlFor="meeting-time" className="dateSelection">
-              Date Selection
-            </label>
-            <input
-              type="datetime-local"
-              id="meeting-time"
-              name="meeting-time"
-              value={dateTime}
-              min={currentTime}
-              max="2099-06-14T00:00"
-              onChange={handleChange}
-            />
+            <DateSelecter />
             <input className="submitButton" type="submit" />
           </form>
         </div>

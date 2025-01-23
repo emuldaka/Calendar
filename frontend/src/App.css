@@ -206,9 +206,7 @@ input[type="text"],
 } */
 
 /* Form input styles to match the dark theme */
-input[type="datetime-local"],
-input[type="submit"],
-input[type="text"] {
+input[type="datetime-local"] {
   height: 100%;
   width: 95%;
   font-size: small;
@@ -229,9 +227,51 @@ input[type="text"] {
   transition: all 0.3s ease; /* Smooth transition for hover/focus effects */
 }
 
+.react-datepicker__input-container {
+  width: 100% !important;
+  margin: 0;
+  justify-content: center;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.DatePickerWrapper {
+  width: 100% !important;
+
+  justify-content: center;
+}
+
+.DatePicker,
+input[type="text"] {
+  width: 90% !important; /* Ensures the DatePicker fills the parent wrapper */
+  margin: 1rem !important;
+  justify-content: center !important;
+  align-self: center !important;
+  align-items: center !important;
+  padding: 0.5rem 1rem !important;
+  font-size: medium !important;
+  border-radius: 10px !important; /* Rounded corners */
+  overflow: hidden !important;
+}
+
+input[type="submit"] {
+  background-color: #00d67d;
+  width: 95% !important; /* Ensures the DatePicker fills the parent wrapper */
+  margin: 1rem !important;
+  justify-content: center !important;
+  align-self: center !important;
+  align-items: center !important;
+  padding: 0.5rem 1rem !important;
+  font-size: medium !important;
+  border-radius: 10px !important; /* Rounded corners */
+  overflow: hidden !important;
+}
+
 .dateSelection {
   height: 100%;
-  width: 95%;
+  width: 100%;
   font-size: small;
   font-family: "Poppins";
   margin-left: 1rem;
@@ -248,33 +288,6 @@ input[type="text"]:focus {
   outline: none; /* Removes the default focus outline */
   box-shadow: 0 0 10px #00ff95; /* Green glow on focus */
   border-color: #00ff95; /* Green border when focused */
-}
-
-/* Specific styling for the submit button to match the rest of the theme */
-input[type="submit"] {
-  background: linear-gradient(
-    145deg,
-    #00ff95,
-    #00d67d
-  ); /* Green gradient background */
-  color: #191a00; /* Dark color for the text inside submit button */
-  border: none; /* Removes the border */
-  padding: 0.5rem 1rem;
-  font-size: medium;
-  border-radius: 10px; /* Rounded corners */
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 255, 149, 0.8); /* Light green glow around the button */
-  transition: all 0.3s ease;
-}
-
-/* Hover effect for submit button */
-input[type="submit"]:hover {
-  background: linear-gradient(
-    145deg,
-    #00d67d,
-    #00ff95
-  ); /* Inverse the gradient on hover */
-  box-shadow: 0 0 15px #00ff95; /* Intensify the glow on hover */
 }
 
 /* Styling for the .dateSelection container to make it consistent with the theme */

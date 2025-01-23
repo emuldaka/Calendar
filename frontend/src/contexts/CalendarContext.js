@@ -7,6 +7,7 @@ const CalendarContextProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState("");
   const [cellMonth, setCellMonth] = useState("");
   const [cellDay, setCellDay] = useState("");
+  const [dateTime, setDateTime] = useState(new Date());
 
   const [monthPagination, setMonthPagination] = useState(
     Number(
@@ -41,6 +42,8 @@ const CalendarContextProvider = ({ children }) => {
         setMonthPagination,
         yearPagination,
         setYearPagination,
+        dateTime,
+        setDateTime,
       }}
     >
       {children}
