@@ -1,13 +1,11 @@
 const express = require("express");
 const {
   createEvent,
-  getEvent,
   getAllEvents,
   deleteEvents,
-  updateEvent,
-  getEvents,
   getEventsByDate,
   getEventsByMonth,
+  updateEventById,
 } = require("../controllers/eventController");
 
 const router = express.Router();
@@ -23,6 +21,8 @@ router.get("/:date", getEventsByDate);
 router.get("/month/:month", getEventsByMonth);
 
 router.get("/", getAllEvents);
+
+router.patch("/", updateEventById);
 
 router.delete("/", deleteEvents);
 

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Event({ id, title, date, isChecked, handleCheckClick }) {
+  const [text, setText] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+
   let timeSlice = date.substring(11, 16);
-  console.log(timeSlice);
 
   function PmConverter(time) {
     const [hours, minutes] = time.split(":").map(Number);
@@ -25,15 +27,55 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
     timeSlice = `12:${timeSlice}`;
   }
 
+  const handleChange = () => {
+    setIsDisabled(!isDisabled);
+    console.log(isDisabled);
+    // setText(event.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/events", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id, title: text }),
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json.error);
+    }
+    if (response.ok) {
+      alert("Event Updated!");
+      console.log(id, text);
+    }
+  };
+
   return (
     <>
       <div className="eventsArrayDiv">
-        <textarea
-          className="eventTitle"
-          value={title}
-          rows={title.length / 44} // Keep it as a single-line input (you can adjust as needed)
-        />
+        {isDisabled === true ? (
+          <textarea
+            className="eventTitle"
+            value={title}
+            rows={title.length / 44} // Keep it as a single-line input (you can adjust as needed)
+            onClick={handleChange}
+          />
+        ) : (
+          <>
+            <input
+              className="eventTitle"
+              value={text === "" ? title : text}
+              rows={title.length / 44}
+              // onClick={handleChange}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <button onClick={handleSubmit}>Submit Change</button>
+          </>
+        )}
+
         <div className="eventsArrayDivDates" id={id}></div>
+
         <div className="eventTime">
           <span className="timeSlice">
             {timeSlice < "13:00" ? timeSlice + " AM" : PmConverter(timeSlice)}

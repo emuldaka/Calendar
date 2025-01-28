@@ -184,7 +184,7 @@ body {
 
 .addEntry {
   display: flex;
-  text-align: start;
+
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -245,8 +245,7 @@ input[type="datetime-local"] {
 
 .DatePicker,
 input[type="text"] {
-  width: 90% !important; /* Ensures the DatePicker fills the parent wrapper */
-  margin: 1rem !important;
+  width: 90% !important; /* Ensures the DatePicker fills the parent wrapper *
   justify-content: center !important;
   align-self: center !important;
   align-items: center !important;
@@ -254,6 +253,7 @@ input[type="text"] {
   font-size: medium !important;
   border-radius: 10px !important; /* Rounded corners */
   overflow: hidden !important;
+  margin-top: 10px;
 }
 
 input[type="submit"] {
@@ -418,27 +418,39 @@ input[type="checkbox"] {
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
   min-height: 60px;
-  max-height: 200px;
+
   overflow-y: hidden; /* Hide overflow in container */
 }
 
-textarea.eventTitle {
+.eventTitleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+.eventTitle {
+  width: 80%;
+  height: 100%;
   background: transparent;
   border: none;
   color: #fff;
   font-size: 20px;
   font-weight: bold;
   resize: none; /* Disable manual resizing */
-  /* overflow: hidden;  */
+  overflow: visible;
+
   padding: 0.5rem;
   min-height: 50px;
-  overflow-wrap: break-word;
 }
 
-textarea.eventTitle:focus {
-  outline: none; /* Remove focus outline */
-}
+/* Remove focus outline */
+/* textarea.eventTitle:focus {
+  outline: none; 
+} */
 
 .eventTitle {
   text-align: left;

@@ -24,6 +24,7 @@ export const useEventSubmit = () => {
     }
     if (response.ok) {
       setIsLoading(false);
+      alert("Event Sent!");
     }
   };
   return { eventSubmit, isLoading, error };

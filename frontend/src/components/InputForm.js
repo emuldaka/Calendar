@@ -82,7 +82,6 @@ function InputForm() {
     ).toISOString();
     console.log(e);
     await eventSubmit(entryText, date);
-    alert("Event Sent!");
     fetchCurrentEvents();
   }
 
@@ -100,10 +99,6 @@ function InputForm() {
     }
   }
 
-  function handleChange(e) {
-    setDateTime(e.target.value);
-  }
-
   return (
     <>
       <div className="formOuterContainer">
@@ -119,6 +114,7 @@ function InputForm() {
               type="text"
               name=""
               id=""
+              maxLength="120"
               placeholder="Enter Event"
               onChange={(e) => setEntryText(e.target.value)}
               value={entryText}
@@ -131,7 +127,9 @@ function InputForm() {
         <div className="eventsContainer">
           <form className="deleteEvents">
             <div className="deleteDiv">
-              <div className="eventsContainerTextTitle">Current events</div>
+              <div className="eventsContainerTextTitle">
+                Current events&nbsp;&nbsp;&nbsp;&nbsp;*Click Events to Edit*
+              </div>
               <button className="delete" onClick={handleDeleteClick}>
                 <MdDelete size={34} style={{ height: 40, width: 40 }} />
               </button>

@@ -10,6 +10,7 @@ export const DateSelecter = () => {
     <div className="DatePickerWrapper">
       <DatePicker
         className="DatePicker"
+        minDate={new Date()}
         selected={dateTime}
         onChange={(date) => {
           setDateTime(date);

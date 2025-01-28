@@ -90,10 +90,26 @@ const deleteEvents = async (req, res) => {
   }
 };
 
+const updateEventById = async (req, res) => {
+  try {
+    console.log("Update Event", req.body);
+    const updateEvent = await Event.findOneAndUpdate(
+      { _id: req.body.id },
+      { $set: { title: req.body.title } },
+      { returnDocument: "after" }
+    );
+    res.status(200).json("update req recieved");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   createEvent,
   getAllEvents,
   getEventsByDate,
   deleteEvents,
   getEventsByMonth,
+  updateEventById,
 };

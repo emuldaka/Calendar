@@ -109,8 +109,13 @@ function Home() {
   function emptyCells() {
     let arr = [];
 
-    const today = new Date();
-    const formattedDate = today.toISOString().split("T")[0]; // Extracts the date part (YYYY-MM-DD)
+    let today = new Date();
+
+    let offsetMinutes = today.getTimezoneOffset();
+
+    today.setMinutes(today.getMinutes() - offsetMinutes);
+
+    const formattedDate = today.toISOString().split("T")[0];
 
     for (let j = 1; j < emptyCellStartDates[monthPagination - 1]; j++) {
       arr.push(
