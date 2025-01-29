@@ -51,6 +51,13 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
     }
   };
 
+  const handleCancel = async (e) => {
+    e.preventDefault();
+    console.log("Cancel Edit");
+    setText(title);
+    setIsDisabled(!isDisabled);
+  };
+
   return (
     <>
       <div className="eventsArrayDiv">
@@ -70,7 +77,10 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
               // onClick={handleChange}
               onChange={(e) => setText(e.target.value)}
             />
-            <button onClick={handleSubmit}>Submit Change</button>
+            <div className="editFormButtons">
+              <button onClick={handleSubmit}>Submit Change</button>
+              <button onClick={handleCancel}>Cancel Edit</button>
+            </div>
           </>
         )}
 
