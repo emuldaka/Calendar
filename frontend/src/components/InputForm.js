@@ -14,12 +14,10 @@ function InputForm() {
   const [checkedEvents, setCheckedEvents] = useState({});
   const {
     setIsFormDisplayed,
-    currentTime,
     cellDay,
     monthPagination,
     yearPagination,
     dateTime,
-    setDateTime,
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
@@ -44,9 +42,7 @@ function InputForm() {
   }
 
   const eventsArrayPopulator = useCallback(() => {
-    // Sort the events by date before mapping
     const sortedEvents = [...currentEvents].sort((a, b) => {
-      // Compare dates as Date objects (ascending order)
       return new Date(a.date) - new Date(b.date);
     });
 
