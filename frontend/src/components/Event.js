@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { CalendarContext } from "../contexts/CalendarContext";
 
 function Event({ id, title, date, isChecked, handleCheckClick }) {
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const { forceRerender, setForceRerender } = useContext(CalendarContext);
 
   let timeSlice = date.substring(11, 16);
 
@@ -27,13 +29,13 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
     timeSlice = `12:${timeSlice}`;
   }
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     setIsDisabled(!isDisabled);
     console.log(isDisabled);
-    // setText(event.target.value);
+    setText(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:5000/api/events", {
       method: "PATCH",
@@ -46,8 +48,12 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
       console.log(json.error);
     }
     if (response.ok) {
+      await setForceRerender(!forceRerender);
+      console.log(forceRerender);
       alert("Event Updated!");
       console.log(id, text);
+      setText(title);
+      await setIsDisabled(!isDisabled);
     }
   };
 
@@ -78,7 +84,7 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
               onChange={(e) => setText(e.target.value)}
             />
             <div className="editFormButtons">
-              <button onClick={handleSubmit}>Submit Change</button>
+              <button onClick={handleUpdateSubmit}>Submit Change</button>
               <button onClick={handleCancel}>Cancel Edit</button>
             </div>
           </>

@@ -204,60 +204,12 @@ function Home() {
     }
   }
 
-  function isNextYearLeapYear() {
-    if ((yearPagination + 1) % 4 === 0 && (yearPagination + 1) % 100 === 0) {
-      if ((yearPagination + 1) % 400 === 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (
-      (yearPagination + 1) % 4 === 0 &&
-      (yearPagination + 1) % 100 !== 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function isCurrentYearLeapYear() {
-    if (yearPagination % 4 === 0 && yearPagination % 100 === 0) {
-      if (yearPagination % 400 === 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (yearPagination % 4 === 0 && yearPagination % 100 !== 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function isLastYearLeapYear() {
-    if ((yearPagination - 1) % 4 === 0 && (yearPagination - 1) % 100 === 0) {
-      if ((yearPagination - 1) % 400 === 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (
-      (yearPagination - 1) % 4 === 0 &&
-      (yearPagination - 1) % 100 !== 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   function leftPagination() {
-    if (monthPagination === 1 && isLastYearLeapYear()) {
+    if (monthPagination === 1 && isLeapYear(yearPagination - 1)) {
       setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(12);
       setYearPagination(yearPagination - 1);
-    } else if (monthPagination === 1 && isCurrentYearLeapYear()) {
+    } else if (monthPagination === 1 && isLeapYear(yearPagination)) {
       setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(12);
       setYearPagination(yearPagination - 1);
@@ -271,11 +223,11 @@ function Home() {
   }
 
   function rightPagination() {
-    if (monthPagination === 12 && isNextYearLeapYear()) {
+    if (monthPagination === 12 && isLeapYear(yearPagination + 1)) {
       setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(1);
       setYearPagination(yearPagination + 1);
-    } else if (monthPagination === 12 && isCurrentYearLeapYear()) {
+    } else if (monthPagination === 12 && isLeapYear(yearPagination)) {
       setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
       setMonthPagination(1);
       setYearPagination(yearPagination + 1);
@@ -294,7 +246,6 @@ function Home() {
 
   return (
     <>
-      {/* <h2 className="title">CALENDAR </h2> */}
       {isFormDisplayed ? (
         <div className="currentMonthCon2">{currentCellDate}</div>
       ) : (

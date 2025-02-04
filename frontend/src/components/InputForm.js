@@ -3,13 +3,13 @@ import { AiFillHome } from "react-icons/ai";
 import { useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { useEventSubmit } from "../hooks/useEventSubmit";
+// import { useFetchCurrentEventsByDay } from ".../hooks/useFetchCurrentEventsByDay";
 import Event from "./Event";
 import { MdDelete } from "react-icons/md";
 import { DateSelecter } from "./DateSelecter";
 
 function InputForm() {
   const [entryText, setEntryText] = useState("");
-  const [currentEvents, setCurrentEvents] = useState([]);
   const { eventSubmit } = useEventSubmit();
   const [checkedEvents, setCheckedEvents] = useState({});
   const {
@@ -18,6 +18,9 @@ function InputForm() {
     monthPagination,
     yearPagination,
     dateTime,
+    currentEvents,
+    setCurrentEvents,
+    forceRerender,
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
@@ -31,11 +34,11 @@ function InputForm() {
     if (response.ok) {
       setCurrentEvents(json);
     }
-  }, [yearPagination, monthPagination, cellDay]);
+  }, [setCurrentEvents, yearPagination, monthPagination, cellDay]);
 
   useEffect(() => {
     fetchCurrentEvents();
-  }, [fetchCurrentEvents]);
+  }, [fetchCurrentEvents, forceRerender]);
 
   function handleClick() {
     setIsFormDisplayed(false);
@@ -62,7 +65,7 @@ function InputForm() {
 
   useEffect(() => {
     eventsArrayPopulator();
-  }, [eventsArrayPopulator]);
+  }, [eventsArrayPopulator, forceRerender]);
 
   function handleCheckClick(id, isChecked) {
     setCheckedEvents((prev) => ({
