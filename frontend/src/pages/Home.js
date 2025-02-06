@@ -257,10 +257,17 @@ function Home() {
     monthPagination
   )} ${yearPagination}`;
 
+  function handleReturnClick() {
+    setIsFormDisplayed(false);
+  }
+
   return (
     <>
       {isFormDisplayed ? (
-        <div className="currentMonthCon2">{currentCellDate}</div>
+        <div className="currentMonthCon2">
+          <button className="backButton" onClick={handleReturnClick}></button>
+          <div className="theDate">{currentCellDate}</div>
+        </div>
       ) : (
         <>
           <div className="currentMonthCon">
