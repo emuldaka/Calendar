@@ -71,7 +71,7 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
           <textarea
             className="eventTitle"
             value={title}
-            rows={title.length / 44} // Keep it as a single-line input (you can adjust as needed)
+            rows={title.length / 44}
             onClick={handleChange}
           />
         ) : (
@@ -80,7 +80,6 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
               className="eventTitle"
               value={text === "" ? title : text}
               rows={title.length / 44}
-              // onClick={handleChange}
               onChange={(e) => setText(e.target.value)}
             />
             <div className="editFormButtons">

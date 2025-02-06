@@ -1,8 +1,7 @@
-/* Base styles (for larger screens) */
 #root {
-  width: 90%; /* This will make the root container take up 90% of the screen width */
-  height: 90%; /* This will make the root container take up 90% of the screen height */
-  margin: 0 auto; /* This centers the container horizontally */
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
   user-select: none;
 }
 
@@ -67,8 +66,8 @@ body {
   align-items: center;
   position: relative;
   transition: transform 0.3s, box-shadow 0.3s;
-  justify-content: center; /* Vertically center the content within the cell */
-  height: 190px; /* Ensure a minimum height for each cell */
+  justify-content: center;
+  height: 190px;
 }
 
 .cell:hover {
@@ -98,8 +97,8 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly; /* This spaces items evenly */
-  align-items: center; /* This centers items horizontally */
+  justify-content: space-evenly;
+  align-items: center;
   position: relative;
 }
 
@@ -110,7 +109,7 @@ body {
   color: #00ff95;
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 1rem; /* Adds spacing between text and result */
+  margin-bottom: 1rem;
   margin: auto;
   margin-top: 0.3rem;
 }
@@ -152,18 +151,18 @@ body {
 
 .formOuterContainer {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  justify-content: center; /* Vertically center the items */
-  align-items: center; /* Horizontally center the items */
-  width: 100%; /* Full width of the parent */
-  height: 100%; /* Ensure it takes full height of the viewport */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   font-size: large;
 }
 
 .formContainer,
 .eventsContainer {
-  width: 30%; /* Use percentage width for responsiveness */
-  max-width: 80rem; /* Maximum width for larger screens */
+  width: 30%;
+  max-width: 80rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   background: linear-gradient(145deg, #1e1c23, #29262d);
@@ -179,7 +178,7 @@ body {
 }
 
 .eventsContainer {
-  padding-right: 10px; /* Optional: Add some padding for the scroll */
+  padding-right: 10px;
 }
 
 .addEntry {
@@ -192,20 +191,7 @@ body {
   color: #ff00e6;
   font-size: medium;
 }
-/* input[type="datetime-local"],
-input[type="submit"],
-input[type="text"],
-.dateSelection {
-  height: 100%;
-  width: 95%;
-  font-size: small;
-  font-family: "Poppins";
-  margin-left: 1rem;
-  margin-right: 1rem;
-  justify-content: center;
-} */
 
-/* Form input styles to match the dark theme */
 input[type="datetime-local"] {
   height: 100%;
   width: 95%;
@@ -215,16 +201,12 @@ input[type="datetime-local"] {
   margin-right: 1rem;
   justify-content: center;
   padding: 0.5rem;
-  background: linear-gradient(
-    145deg,
-    #2d2a30,
-    #1a181d
-  ); /* Matches dark gradient background */
-  color: #fff; /* White text color */
-  border: 2px solid #00ff95; /* Green border to align with the color theme */
-  border-radius: 10px; /* Rounded corners for inputs */
-  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8); /* Light purple glow around the inputs */
-  transition: all 0.3s ease; /* Smooth transition for hover/focus effects */
+  background: linear-gradient(145deg, #2d2a30, #1a181d);
+  color: #fff;
+  border: 2px solid #00ff95;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8);
+  transition: all 0.3s ease;
 }
 
 .react-datepicker__input-container {
@@ -245,27 +227,21 @@ input[type="datetime-local"] {
 
 .DatePicker,
 input[type="text"] {
-  width: 90% !important; /* Ensures the DatePicker fills the parent wrapper *
-  justify-content: center !important;
-  align-self: center !important;
-  align-items: center !important;
-  padding: 0.5rem 1rem !important;
-  font-size: medium !important;
-  border-radius: 10px !important; /* Rounded corners */
+  width: 90% !important;
   overflow: hidden !important;
   margin-top: 10px;
 }
 
 input[type="submit"] {
   background-color: #00d67d;
-  width: 95% !important; /* Ensures the DatePicker fills the parent wrapper */
+  width: 95% !important;
   margin: 1rem !important;
   justify-content: center !important;
   align-self: center !important;
   align-items: center !important;
   padding: 0.5rem 1rem !important;
   font-size: medium !important;
-  border-radius: 10px !important; /* Rounded corners */
+  border-radius: 10px !important;
   overflow: hidden !important;
 }
 
@@ -278,19 +254,17 @@ input[type="submit"] {
   margin-right: 1rem;
   justify-content: center;
   padding: 0.5rem;
-  color: black; /* White text color */
+  color: black;
 }
 
-/* Focus effect for input fields */
 input[type="datetime-local"]:focus,
 input[type="submit"]:focus,
 input[type="text"]:focus {
-  outline: none; /* Removes the default focus outline */
-  box-shadow: 0 0 10px #00ff95; /* Green glow on focus */
-  border-color: #00ff95; /* Green border when focused */
+  outline: none;
+  box-shadow: 0 0 10px #00ff95;
+  border-color: #00ff95;
 }
 
-/* Styling for the .dateSelection container to make it consistent with the theme */
 .dateSelection {
   display: flex;
   text-align: start;
@@ -298,42 +272,36 @@ input[type="text"]:focus {
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  color: black; /* Light pink color for text */
+  color: black;
   font-size: medium;
-  background: #00d67d; /* Solid dark background matching the dark theme */
+  background: #00d67d;
   padding: 0.5rem;
 
   border-radius: 10px;
 }
 
-/* Styling for the text input (text field) */
 input[type="text"] {
-  background: linear-gradient(
-    145deg,
-    #2d2a30,
-    #1a181d
-  ); /* Matches the background of other inputs */
-  color: #fff; /* White text */
-  border: 2px solid #00ff95; /* Green border */
+  background: linear-gradient(145deg, #2d2a30, #1a181d);
+  color: #fff;
+  border: 2px solid #00ff95;
   padding: 0.5rem;
   font-size: medium;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8); /* Light purple glow */
+  box-shadow: 0 4px 15px rgba(255, 0, 230, 0.8);
   transition: all 0.3s ease;
 }
 
 input[type="text"]:focus {
-  outline: none; /* Removes the default focus outline */
-  box-shadow: 0 0 10px #00ff95; /* Green glow on focus */
-  border-color: #00ff95; /* Green border when focused */
+  outline: none;
+  box-shadow: 0 0 10px #00ff95;
+  border-color: #00ff95;
 }
 
-/* Optional: Input styling on hover */
 input[type="text"]:hover,
 input[type="datetime-local"]:hover,
 input[type="submit"]:hover {
-  transform: scale(1.05); /* Slightly scale up on hover */
-  box-shadow: 0 0 20px #ff00e6; /* Light glow on hover */
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff00e6;
 }
 
 input[type="submit"] {
@@ -368,13 +336,13 @@ input[type="submit"] {
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
   height: 800px;
-  overflow-y: auto; /* Enable vertical scroll when content overflows */
+  overflow-y: auto;
 }
 
 .deleteDiv {
   display: flex;
-  justify-content: space-between; /* Ensures spacing between the title and the button */
-  align-items: center; /* Vertically centers the items */
+  justify-content: space-between;
+  align-items: center;
   margin-top: 0.5rem;
 }
 
@@ -386,23 +354,23 @@ input[type="submit"] {
 .eventsContainerTextTitle {
   font-size: small;
   margin: 0.5rem;
-  text-align: center; /* Ensures the text is centered */
-  flex-grow: 1; /* Allows the title to take up the available space and stay centered */
+  text-align: center;
+  flex-grow: 1;
   padding-left: 4rem;
   margin-left: 4rem;
 }
 
 .checkbox-container {
   display: flex;
-  align-items: center; /* Vertically align the checkbox with the time */
-  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
+  justify-content: flex-start;
   margin-right: 1rem;
 }
 
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  margin-left: 10px; /* Space to the left of checkbox */
+  margin-left: 10px;
 }
 
 .eventsArrayDiv {
@@ -418,8 +386,7 @@ input[type="checkbox"] {
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
   min-height: 60px;
-
-  overflow-y: hidden; /* Hide overflow in container */
+  overflow-y: hidden;
 }
 
 .eventTitleContainer {
@@ -440,41 +407,34 @@ input[type="checkbox"] {
   color: #fff;
   font-size: 20px;
   font-weight: bold;
-  resize: none; /* Disable manual resizing */
+  resize: none;
   overflow: visible;
-
   padding: 0.5rem;
   min-height: 50px;
 }
 
-/* Remove focus outline */
-/* textarea.eventTitle:focus {
-  outline: none; 
-} */
-
 .eventTitle {
   text-align: left;
-  /* flex-grow: 1; */
   margin-left: 1rem;
   margin-right: 1rem;
 }
 
 .eventTime {
   display: flex;
-  flex-direction: row; /* Aligns the time and checkbox horizontally */
-  align-items: center; /* Vertically center them */
-  gap: 10px; /* Space between the time slice and checkbox */
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .timeSlice {
-  font-size: 20px; /* Adjusts the font size for the time */
-  display: flex; /* Use flexbox to align the content */
-  justify-content: center; /* Centers the text horizontally */
-  align-items: center; /* Centers the text vertically */
-  white-space: nowrap; /* Prevents wrapping of text */
-  overflow: hidden; /* Hides anything overflowing */
-  text-overflow: ellipsis; /* Adds "..." if the text overflows */
-  height: 100%; /* Ensures it fills the full height of the container */
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 100%;
 }
 
 .currentMonthCon {
@@ -534,44 +494,41 @@ input[type="checkbox"] {
   padding: 0;
 }
 
-/* Style the scrollbar container */
+.today {
+  font-size: 20px;
+}
+
 ::-webkit-scrollbar {
-  width: 12px; /* Width of the vertical scrollbar */
-  height: 12px; /* Height of the horizontal scrollbar */
+  width: 12px;
+  height: 12px;
 }
 
-/* Style the scrollbar track (background) */
 ::-webkit-scrollbar-track {
-  background: #29262d; /* Dark theme background for track */
-  border-radius: 10px; /* Rounded corners for track */
+  background: #29262d;
+  border-radius: 10px;
 }
 
-/* Style the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background: #00ff95; /* Bright color for the thumb */
-  border-radius: 10px; /* Rounded corners for the thumb */
-  border: 3px solid #1e1c23; /* Dark border to add contrast */
+  background: #00ff95;
+  border-radius: 10px;
+  border: 3px solid #1e1c23;
 }
 
-/* Style the thumb when hovered */
 ::-webkit-scrollbar-thumb:hover {
-  background: #00d67d; /* Slightly darker green on hover */
+  background: #00d67d;
 }
 
-/* Optional: Horizontal scrollbar styling */
 ::-webkit-scrollbar-horizontal {
-  height: 10px; /* Height for horizontal scrollbar */
+  height: 10px;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-  background: #00ff95; /* Same color for horizontal thumb */
+  background: #00ff95;
 }
 
 ::-webkit-scrollbar-track:horizontal {
-  background: #29262d; /* Same dark background for horizontal track */
+  background: #29262d;
 }
-
-/* Media Queries for responsiveness */
 
 @media (max-width: 1921px) {
   .cell {
@@ -673,7 +630,6 @@ input[type="checkbox"] {
   }
 }
 
-/* For mobile screens */
 @media (max-width: 660px) {
   .dayNames {
     font-size: 6px;

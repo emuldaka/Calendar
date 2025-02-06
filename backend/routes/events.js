@@ -10,10 +10,6 @@ const {
 
 const router = express.Router();
 
-//require auth for all event routes
-// router.use(requireAuth)
-//^^ if we want auth in future
-
 router.post("/", createEvent);
 
 router.get("/:date", getEventsByDate);

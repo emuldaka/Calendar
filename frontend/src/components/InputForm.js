@@ -3,7 +3,6 @@ import { AiFillHome } from "react-icons/ai";
 import { useContext } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
 import { useEventSubmit } from "../hooks/useEventSubmit";
-// import { useFetchCurrentEventsByDay } from ".../hooks/useFetchCurrentEventsByDay";
 import Event from "./Event";
 import { MdDelete } from "react-icons/md";
 import { DateSelecter } from "./DateSelecter";
@@ -13,6 +12,7 @@ function InputForm() {
   const { eventSubmit } = useEventSubmit();
   const [checkedEvents, setCheckedEvents] = useState({});
   const {
+    isFormDisplayed,
     setIsFormDisplayed,
     cellDay,
     monthPagination,
@@ -38,7 +38,7 @@ function InputForm() {
 
   useEffect(() => {
     fetchCurrentEvents();
-  }, [fetchCurrentEvents, forceRerender]);
+  }, [fetchCurrentEvents, forceRerender, isFormDisplayed]);
 
   function handleClick() {
     setIsFormDisplayed(false);
@@ -65,7 +65,7 @@ function InputForm() {
 
   useEffect(() => {
     eventsArrayPopulator();
-  }, [eventsArrayPopulator, forceRerender]);
+  }, [eventsArrayPopulator, forceRerender, isFormDisplayed]);
 
   function handleCheckClick(id, isChecked) {
     setCheckedEvents((prev) => ({

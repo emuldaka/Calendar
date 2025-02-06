@@ -20,7 +20,6 @@ const createEvent = async (req, res) => {
       .json({ error: "Please fill in all the fields", emptyFields });
   }
 
-  // add event to data base
   try {
     const event = await Event.create({ title, date });
     res.status(200).json(event);

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useContext } from "react";
 import "../App.css";
 import InputForm from "../components/InputForm";
@@ -30,45 +30,50 @@ function Home() {
   const [currentCellDate, setCurrentCellDate] = useState("");
 
   useEffect(() => {
-    fetchCurrentEvents(yearPagination, monthPagination);
-  }, [monthPagination, yearPagination]);
-
-  useEffect(() => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .slice(0, 16);
     setCurrentTime(now);
   }, [setCurrentTime]);
 
-  const monthsOrdered = [
-    "January",
-    "Febuary",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const handleClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      const monthsOrdered = [
+        "January",
+        "Febuary",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
 
-  function handleClick(e) {
-    e.preventDefault();
-    setCellDay(e.target.id);
-    setIsFormDisplayed(true);
-    const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 16);
-    setCurrentTime(now);
-    setCurrentCellDate(
-      `${monthsOrdered[monthPagination - 1]} ${e.target.id} ${yearPagination}`
-    );
-  }
+      setCellDay(e.target.id);
+      setIsFormDisplayed(true);
+      const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, 16);
+      setCurrentTime(now);
+      setCurrentCellDate(
+        `${monthsOrdered[monthPagination - 1]} ${e.target.id} ${yearPagination}`
+      );
+    },
+    [
+      monthPagination,
+      setCellDay,
+      setCurrentTime,
+      setIsFormDisplayed,
+      yearPagination,
+    ]
+  );
 
-  async function fetchCurrentEvents(yearPagination, monthPagination) {
+  const fetchCurrentEvents = useCallback(async () => {
     let month = 0;
     if (Number(monthPagination) < 10) {
       month = "0" + monthPagination.toString();
@@ -92,19 +97,19 @@ function Home() {
     } catch (error) {
       return false;
     }
-  }
+  }, [monthPagination, yearPagination]);
 
-  function doubleDigitFormatting(number) {
-    let result = "";
-    if (number < 10) {
-      result = "0" + number.toString();
-    } else {
-      result = number.toString();
+  const emptyCells = useCallback(() => {
+    function doubleDigitFormatting(number) {
+      let result = "";
+      if (number < 10) {
+        result = "0" + number.toString();
+      } else {
+        result = number.toString();
+      }
+      return result;
     }
-    return result;
-  }
 
-  function emptyCells() {
     let arr = [];
 
     let emptyCellsCount = determineEmptyCells(yearPagination, monthPagination);
@@ -188,7 +193,15 @@ function Home() {
       );
     }
     return arr;
-  }
+  }, [handleClick, monthDays, monthPagination, monthlyFetch, yearPagination]);
+
+  useEffect(() => {
+    fetchCurrentEvents(yearPagination, monthPagination);
+  }, [monthPagination, yearPagination, fetchCurrentEvents, isFormDisplayed]);
+
+  useEffect(() => {
+    emptyCells();
+  }, [emptyCells, isFormDisplayed]);
 
   function isLeapYear(year) {
     if (year % 4 === 0 && year % 100 === 0) {

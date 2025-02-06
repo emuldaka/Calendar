@@ -11,10 +11,6 @@ const eventSchema = new Schema({
     type: Date,
     required: true,
   },
-  //   user_id: {
-  //     type: String,
-  //     required: true,
-  //   }
 });
 
 module.exports = mongoose.model("Event", eventSchema);

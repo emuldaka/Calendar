@@ -6,26 +6,16 @@ const port = 5000;
 const mongoose = require("mongoose");
 const eventRoutes = require("./routes/events");
 
-// Middleware to allow Cross-Origin requests (CORS)
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-// Example route
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello from the backend!" });
+  res.json({ message: "Server Initialized" });
 });
 
-// Start the server
-// app.listen(port, () => {
-//   console.log(`Server running on http://localhost:${port}`);
-// });
-
-//routes
 app.use("/api/events", eventRoutes);
-// app.use("/api/user", userRoutes); idk if we need this
 
-//connect to db
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
