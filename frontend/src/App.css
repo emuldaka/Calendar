@@ -115,10 +115,12 @@ body {
 }
 
 .resultDiv {
-  color: #ff00e6;
+  color: #ffb5f8;
   font-weight: bold;
   font-size: 18px;
   margin: auto;
+  text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000,
+    -1px 1px 0 #000000;
 }
 
 .days {
@@ -447,17 +449,30 @@ input[type="checkbox"] {
 }
 
 .currentMonthCon2 {
-  display: flex;
+  position: relative;
 }
 
-.theDate .backButton {
+.backButton {
+  position: absolute;
+  left: 0;
+  height: 40px;
+  width: 40px;
   text-align: center;
   gap: 10px;
   color: #ff00e6;
   font-size: larger;
   margin-bottom: 2rem;
   margin-top: 3rem;
-  align-self: center;
+  background: none;
+  border: none;
+}
+
+.theDate {
+  /* position: absolute; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  margin: 1rem;
+  font-size: 30px;
 }
 
 .pageLeft,
@@ -582,7 +597,7 @@ input[type="checkbox"] {
   }
 
   .resultDiv {
-    color: #ff00e6;
+    color: #ffb5f8;
     font-weight: bold;
     font-size: 18px;
   }

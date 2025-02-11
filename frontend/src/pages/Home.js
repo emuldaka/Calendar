@@ -8,6 +8,7 @@ import { useCurrentMonth } from "../hooks/useCurrentMonth";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import determineEmptyCells from "../util/determineEmptyCells";
+import { MdOutlineArrowCircleLeft } from "react-icons/md";
 
 function Home() {
   const {
@@ -19,6 +20,8 @@ function Home() {
     setMonthPagination,
     yearPagination,
     setYearPagination,
+    currentCellDate,
+    setCurrentCellDate,
   } = useContext(CalendarContext);
 
   const [monthDays, setMonthDays] = useState([
@@ -26,8 +29,6 @@ function Home() {
   ]);
 
   const [monthlyFetch, setMonthlyFetch] = useState([]);
-
-  const [currentCellDate, setCurrentCellDate] = useState("");
 
   useEffect(() => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -70,6 +71,7 @@ function Home() {
       setCurrentTime,
       setIsFormDisplayed,
       yearPagination,
+      setCurrentCellDate,
     ]
   );
 
@@ -163,7 +165,7 @@ function Home() {
                 style={{
                   color: "white",
                   textShadow:
-                    "1px 1px 0 #ff00e6, -1px -1px 0 #ff00e6, 1px -1px 0 #ff00e6, -1px 1px 0 #ff00e6",
+                    "1px 1px black, -1px -1px  black, 1px -1px  black, -1px 1px  black",
                 }}
                 size={40}
               >
@@ -265,7 +267,9 @@ function Home() {
     <>
       {isFormDisplayed ? (
         <div className="currentMonthCon2">
-          <button className="backButton" onClick={handleReturnClick}></button>
+          <button className="backButton" onClick={handleReturnClick}>
+            <MdOutlineArrowCircleLeft size={50} />
+          </button>
           <div className="theDate">{currentCellDate}</div>
         </div>
       ) : (
