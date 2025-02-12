@@ -351,6 +351,36 @@ input[type="submit"] {
 .delete {
   align-self: flex-end;
   margin-right: 2.75rem;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.delete::after {
+  content: "Delete selected items";
+  position: absolute;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.delete:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.delete:hover {
+  background-color: red;
 }
 
 .eventsContainerTextTitle {

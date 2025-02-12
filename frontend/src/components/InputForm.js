@@ -21,7 +21,6 @@ function InputForm() {
     currentEvents,
     setCurrentEvents,
     forceRerender,
-    currentCellDate,
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
@@ -128,7 +127,7 @@ function InputForm() {
           <form className="deleteEvents">
             <div className="deleteDiv">
               <div className="eventsContainerTextTitle">
-                {currentCellDate} - Events
+                Double Click Events Below To Edit
               </div>
               <button className="delete" onClick={handleDeleteClick}>
                 <MdDelete size={34} style={{ height: 40, width: 40 }} />

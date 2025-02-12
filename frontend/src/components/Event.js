@@ -95,18 +95,19 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
           <span className="timeSlice">
             {timeSlice < "13:00" ? timeSlice + " AM" : PmConverter(timeSlice)}
           </span>
-          <input
-            className="checkbox-container"
-            type="checkbox"
-            checked={isChecked}
-            size={24}
-            value={title}
-            onChange={(e) => handleCheckClick(id, e.target.checked)}
-            style={{
-              height: 20,
-              width: 20,
-            }}
-          />
+          <label className="checkbox-container">
+            <input
+              type="checkbox"
+              checked={isChecked}
+              size={24}
+              value={title}
+              onChange={(e) => handleCheckClick(id, e.target.checked)}
+              style={{
+                height: 20,
+                width: 20,
+              }}
+            />
+          </label>
         </div>
       </div>
     </>

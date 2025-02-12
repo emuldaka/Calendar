@@ -270,7 +270,9 @@ function Home() {
           <button className="backButton" onClick={handleReturnClick}>
             <MdOutlineArrowCircleLeft size={50} />
           </button>
-          <div className="theDate">{currentCellDate}</div>
+          <div className="theDate">
+            {currentCellDate} - Selected Day's Events
+          </div>
         </div>
       ) : (
         <>
