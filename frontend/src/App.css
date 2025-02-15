@@ -278,7 +278,6 @@ input[type="text"]:focus {
   font-size: medium;
   background: #00d67d;
   padding: 0.5rem;
-
   border-radius: 10px;
 }
 
@@ -498,9 +497,6 @@ input[type="checkbox"] {
 }
 
 .theDate {
-  /* position: absolute; */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
   margin: 1rem;
   font-size: 30px;
 }
