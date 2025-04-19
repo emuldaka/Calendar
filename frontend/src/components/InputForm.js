@@ -24,9 +24,11 @@ function InputForm() {
   } = useContext(CalendarContext);
   const [eventsArray, setEventsArray] = useState([]);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const fetchCurrentEvents = useCallback(async () => {
     const response = await fetch(
-      `http://localhost:5000/api/events/${yearPagination}-${
+      `${apiUrl}/api/events/${yearPagination}-${
         monthPagination < 10 ? "0" + monthPagination : monthPagination
       }-${cellDay}`
     );
@@ -88,7 +90,7 @@ function InputForm() {
     e.preventDefault();
     const idArray = Object.keys(checkedEvents);
 
-    const response = await fetch("http://localhost:5000/api/events", {
+    const response = await fetch(`${apiUrl}/api/events`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: [...idArray] }),

@@ -4,6 +4,8 @@ export const useEventSubmit = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const eventSubmit = async (title, date) => {
     setIsLoading(true);
     setError(null);
@@ -11,7 +13,7 @@ export const useEventSubmit = () => {
     const localDate = new Date(date); // `date` is in UTC
     const localDateString = localDate.toISOString().slice(0, 16);
 
-    const response = await fetch("http://localhost:5000/api/events", {
+    const response = await fetch(`${apiUrl}/api/events`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, date: localDateString }),

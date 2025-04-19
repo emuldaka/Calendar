@@ -30,6 +30,8 @@ function Home() {
 
   const [monthlyFetch, setMonthlyFetch] = useState([]);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -85,7 +87,7 @@ function Home() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/events/month/${yearPagination}-${month}`
+        `${apiUrl}/api/events/month/${yearPagination}-${month}`
       );
       const json = await response.json();
       if (response.ok) {

@@ -8,10 +8,10 @@ export const useFetchCurrentEventsByDay = () => {
     setIsLoading(true);
     setError(null);
 
+    const apiUrl = process.env.REACT_APP_API_URL;
+
     const response = await fetch(
-      `http://localhost:5000/api/events/${year}-${
-        month < 10 ? "0" + month : month
-      }-${day}`
+      `${apiUrl}/api/events/${year}-${month < 10 ? "0" + month : month}-${day}`
     );
     const json = await response.json();
     if (response.ok) {
