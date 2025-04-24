@@ -101,7 +101,7 @@ function Home() {
     } catch (error) {
       return false;
     }
-  }, [monthPagination, yearPagination]);
+  }, [monthPagination, yearPagination, apiUrl]);
 
   const emptyCells = useCallback(() => {
     function doubleDigitFormatting(number) {

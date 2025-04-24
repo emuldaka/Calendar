@@ -36,7 +36,7 @@ function InputForm() {
     if (response.ok) {
       setCurrentEvents(json);
     }
-  }, [setCurrentEvents, yearPagination, monthPagination, cellDay]);
+  }, [setCurrentEvents, yearPagination, monthPagination, cellDay, apiUrl]);
 
   useEffect(() => {
     fetchCurrentEvents();
