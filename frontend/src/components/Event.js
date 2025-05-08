@@ -1,12 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { CalendarContext } from "../contexts/CalendarContext";
+import { useAuthHeader } from "react-auth-kit";
 
 function Event({ id, title, date, isChecked, handleCheckClick }) {
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const { forceRerender, setForceRerender } = useContext(CalendarContext);
 
+  const authHeader = useAuthHeader();
+
+  const authHeaderValue = useMemo(() => authHeader(), [authHeader]);
+
   let timeSlice = date.substring(11, 16);
+  console.log(date, timeSlice);
 
   function PmConverter(time) {
     const [hours, minutes] = time.split(":").map(Number);
@@ -39,7 +45,10 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
     e.preventDefault();
     const response = await fetch("http://localhost:5000/api/events", {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: authHeaderValue,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ id: id, title: text }),
     });
     const json = await response.json();
@@ -48,11 +57,12 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
       console.log(json.error);
     }
     if (response.ok) {
+      setText(title);
       await setForceRerender(!forceRerender);
       console.log(forceRerender);
       alert("Event Updated!");
       console.log(id, text);
-      setText(title);
+
       await setIsDisabled(!isDisabled);
     }
   };

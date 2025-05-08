@@ -1,12 +1,17 @@
-import React, { useCallback, useEffect } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+} from "react";
 import { useContext } from "react";
+import { useSignOut, useAuthUser, useAuthHeader } from "react-auth-kit";
 import "../App.css";
 import InputForm from "../components/InputForm";
 import { CalendarContext } from "../contexts/CalendarContext";
-import { useState } from "react";
 import { useCurrentMonth } from "../hooks/useCurrentMonth";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import determineEmptyCells from "../util/determineEmptyCells";
 import { MdOutlineArrowCircleLeft } from "react-icons/md";
 
@@ -22,15 +27,24 @@ function Home() {
     setYearPagination,
     currentCellDate,
     setCurrentCellDate,
+    dateTime,
+    setDateTime,
   } = useContext(CalendarContext);
-
+  const signOut = useSignOut();
+  const authUser = useAuthUser();
+  const authHeader = useAuthHeader();
   const [monthDays, setMonthDays] = useState([
     31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
   ]);
-
   const [monthlyFetch, setMonthlyFetch] = useState([]);
-
+  const [isFetching, setIsFetching] = useState(false);
   const apiUrl = process.env.REACT_APP_API_URL;
+  const fetchTimeoutRef = useRef(null);
+  const retryCountRef = useRef(0);
+  const hasFetchedRef = useRef(false);
+  const authHeaderValue = useMemo(() => authHeader(), [authHeader]);
+
+  const isAuthenticated = !!authUser();
 
   useEffect(() => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -44,7 +58,7 @@ function Home() {
       e.preventDefault();
       const monthsOrdered = [
         "January",
-        "Febuary",
+        "February",
         "March",
         "April",
         "May",
@@ -56,7 +70,6 @@ function Home() {
         "November",
         "December",
       ];
-
       setCellDay(e.target.id);
       setIsFormDisplayed(true);
       const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -78,60 +91,102 @@ function Home() {
   );
 
   const fetchCurrentEvents = useCallback(async () => {
-    let month = 0;
-    if (Number(monthPagination) < 10) {
-      month = "0" + monthPagination.toString();
-    } else {
-      month = monthPagination;
-    }
+    if (isFetching || !isAuthenticated) return;
+    setIsFetching(true);
+
+    const month =
+      monthPagination < 10 ? `0${monthPagination}` : monthPagination;
+    const maxRetries = 3;
 
     try {
       const response = await fetch(
-        `${apiUrl}/api/events/month/${yearPagination}-${month}`
-      );
-      const json = await response.json();
-      if (response.ok) {
-        let fetchResponse = json;
-        let arr = [];
-        for (let i = 0; i < Object.keys(fetchResponse).length; i++) {
-          arr.push(fetchResponse[i].date.substring(8, 10));
+        `${apiUrl}/api/events/month/${yearPagination}-${month}`,
+        {
+          headers: {
+            Authorization: authHeaderValue,
+          },
         }
-        setMonthlyFetch(arr);
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      const json = await response.json();
+      const arr = json.map((event) => event.date.substring(8, 10));
+      setMonthlyFetch(arr);
+      retryCountRef.current = 0;
     } catch (error) {
-      return false;
+      console.error("Error fetching events:", error, {
+        status: error.response?.status,
+        headers: authHeaderValue,
+      });
+      if (retryCountRef.current < maxRetries) {
+        retryCountRef.current += 1;
+        fetchTimeoutRef.current = setTimeout(() => fetchCurrentEvents(), 5000);
+      } else {
+        console.error("Max retries reached, stopping fetch attempts.");
+      }
+    } finally {
+      setIsFetching(false);
     }
-  }, [monthPagination, yearPagination, apiUrl]);
+  }, [
+    monthPagination,
+    yearPagination,
+    apiUrl,
+    authHeaderValue,
+    isAuthenticated,
+  ]);
+
+  // Debug fetchCurrentEvents recreation
+  const fetchCurrentEventsRef = useRef(fetchCurrentEvents);
+  useEffect(() => {
+    if (fetchCurrentEventsRef.current !== fetchCurrentEvents) {
+      console.log("fetchCurrentEvents recreated");
+      fetchCurrentEventsRef.current = fetchCurrentEvents;
+    }
+  }, [fetchCurrentEvents]);
+
+  // Reset retry count and hasFetched on pagination change
+  useEffect(() => {
+    retryCountRef.current = 0;
+    hasFetchedRef.current = false;
+  }, [monthPagination, yearPagination]);
+
+  useEffect(() => {
+    console.log("useEffect triggered", {
+      monthPagination,
+      yearPagination,
+      isFormDisplayed,
+      isAuthenticated,
+    });
+    if (!isFormDisplayed && isAuthenticated && !hasFetchedRef.current) {
+      hasFetchedRef.current = true;
+      fetchCurrentEvents();
+    }
+    return () => {
+      if (fetchTimeoutRef.current) clearTimeout(fetchTimeoutRef.current);
+    };
+  }, [
+    monthPagination,
+    yearPagination,
+    isFormDisplayed,
+    fetchCurrentEvents,
+    isAuthenticated,
+  ]);
 
   const emptyCells = useCallback(() => {
     function doubleDigitFormatting(number) {
-      let result = "";
-      if (number < 10) {
-        result = "0" + number.toString();
-      } else {
-        result = number.toString();
-      }
-      return result;
+      return number < 10 ? `0${number}` : number.toString();
     }
 
     let arr = [];
-
     let emptyCellsCount = determineEmptyCells(yearPagination, monthPagination);
-
     let emptyCellsTotal = emptyCellsCount - 2;
 
-    if (emptyCellsTotal === -1) {
-      emptyCellsTotal = 6;
-    } else if (emptyCellsTotal === -2) {
-      emptyCellsTotal = 5;
-    }
+    if (emptyCellsTotal === -1) emptyCellsTotal = 6;
+    else if (emptyCellsTotal === -2) emptyCellsTotal = 5;
 
-    let today = new Date();
-
-    let offsetMinutes = today.getTimezoneOffset();
-
-    today.setMinutes(today.getMinutes() - offsetMinutes);
-
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
     const formattedDate = today.toISOString().split("T")[0];
 
     for (let j = 0; j < emptyCellsTotal; j++) {
@@ -145,51 +200,41 @@ function Home() {
     }
 
     for (let i = 1; i <= monthDays[monthPagination - 1]; i++) {
-      let result = "";
-      if (i < 10) {
-        i = "0" + i.toString();
-      }
-      i = i.toString();
-      const count = monthlyFetch.filter((element) => element === i).length;
-      if (count > 0) {
-        result = count;
-      }
+      const day = doubleDigitFormatting(i);
+      const count = monthlyFetch.filter((element) => element === day).length;
+      const result =
+        count === 1 ? "1 Event" : count > 0 ? `${count} Events` : "";
 
       arr.push(
-        <div className="cell" key={i}>
+        <div className="cell" key={day}>
           <div className="cellTextContainer">
             {formattedDate ===
             `${yearPagination}-${doubleDigitFormatting(
               monthPagination
-            )}-${i}` ? (
+            )}-${day}` ? (
               <div
                 className="cellText"
                 style={{
                   color: "white",
                   textShadow:
-                    "1px 1px black, -1px -1px  black, 1px -1px  black, -1px 1px  black",
+                    "1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black",
                 }}
-                size={40}
               >
-                {i}
+                {day}
               </div>
             ) : (
-              <div className="cellText">{i}</div>
+              <div className="cellText">{day}</div>
             )}
             {formattedDate ===
             `${yearPagination}-${doubleDigitFormatting(
               monthPagination
-            )}-${i}` ? (
+            )}-${day}` ? (
               <div className="today">TODAY</div>
             ) : (
               <div></div>
             )}
-
-            <div className="resultDiv">
-              {result === 1 ? `1 Event` : result > 0 ? `${result} Events` : ""}
-            </div>
-
-            <button className="editButton" onClick={handleClick} id={i}>
+            <div className="resultDiv">{result}</div>
+            <button className="editButton" onClick={handleClick} id={day}>
               View/Edit
             </button>
           </div>
@@ -199,70 +244,56 @@ function Home() {
     return arr;
   }, [handleClick, monthDays, monthPagination, monthlyFetch, yearPagination]);
 
-  useEffect(() => {
-    fetchCurrentEvents(yearPagination, monthPagination);
-  }, [monthPagination, yearPagination, fetchCurrentEvents, isFormDisplayed]);
-
-  useEffect(() => {
-    emptyCells();
-  }, [emptyCells, isFormDisplayed]);
-
   function isLeapYear(year) {
-    if (year % 4 === 0 && year % 100 === 0) {
-      if (year % 400 === 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (year % 4 === 0 && year % 100 !== 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
 
-  function leftPagination() {
-    if (monthPagination === 1 && isLeapYear(yearPagination - 1)) {
-      setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
-      setMonthPagination(12);
-      setYearPagination(yearPagination - 1);
-    } else if (monthPagination === 1 && isLeapYear(yearPagination)) {
-      setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
-      setMonthPagination(12);
-      setYearPagination(yearPagination - 1);
-    } else if (monthPagination === 1) {
-      setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
+  const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
+  };
+
+  const leftPagination = debounce(() => {
+    if (monthPagination === 1) {
+      setMonthDays(
+        isLeapYear(yearPagination - 1)
+          ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+          : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+      );
       setMonthPagination(12);
       setYearPagination(yearPagination - 1);
     } else {
       setMonthPagination(monthPagination - 1);
     }
-  }
+  }, 300);
 
-  function rightPagination() {
-    if (monthPagination === 12 && isLeapYear(yearPagination + 1)) {
-      setMonthDays([31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
-      setMonthPagination(1);
-      setYearPagination(yearPagination + 1);
-    } else if (monthPagination === 12 && isLeapYear(yearPagination)) {
-      setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
-      setMonthPagination(1);
-      setYearPagination(yearPagination + 1);
-    } else if (monthPagination === 12) {
-      setMonthDays([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
+  const rightPagination = debounce(() => {
+    if (monthPagination === 12) {
+      setMonthDays(
+        isLeapYear(yearPagination + 1)
+          ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+          : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+      );
       setMonthPagination(1);
       setYearPagination(yearPagination + 1);
     } else {
       setMonthPagination(monthPagination + 1);
     }
-  }
+  }, 300);
 
-  let currentMonthYearDisplay = `${useCurrentMonth(
+  const currentMonthYearDisplay = `${useCurrentMonth(
     monthPagination
   )} ${yearPagination}`;
 
   function handleReturnClick() {
     setIsFormDisplayed(false);
+  }
+
+  function handleLogout() {
+    signOut();
   }
 
   return (
@@ -277,7 +308,10 @@ function Home() {
           </div>
         </div>
       ) : (
-        <>
+        <div className="header-container">
+          <span className="welcome-message">
+            Welcome, {authUser()?.email || "User"}!
+          </span>
           <div className="currentMonthCon">
             <button className="pageLeft" onClick={leftPagination}>
               <IoIosArrowBack size={20} />
@@ -286,8 +320,14 @@ function Home() {
             <button className="pageRight" onClick={rightPagination}>
               <IoIosArrowForward size={20} />
             </button>
+            <button
+              className="auth-submit-button logout-button"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </div>
-        </>
+        </div>
       )}
 
       {isFormDisplayed ? (

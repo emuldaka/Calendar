@@ -5,6 +5,104 @@
   user-select: none;
 }
 
+.auth-container {
+  width: 30%;
+  max-width: 400px;
+  margin: 2rem auto;
+  background: linear-gradient(145deg, #1e1c23, #29262d);
+  border: 3px solid #00ff95;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 255, 149, 0.8);
+  padding: 1.5rem;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+.auth-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00ff95;
+  margin-bottom: 1rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.auth-label {
+  font-size: 16px;
+  color: #ff00e6;
+  text-align: left;
+  margin-bottom: 0.25rem;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.5rem;
+  background: linear-gradient(145deg, #2d2a30, #1a181d);
+  border: 2px solid #00ff95;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00ff95;
+  border-color: #00ff95;
+}
+
+.auth-input:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff00e6;
+}
+
+.auth-error {
+  color: #ffb5f8;
+  font-size: 14px;
+  margin: 0.5rem 0;
+  text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000,
+    -1px 1px 0 #000000;
+}
+
+.auth-submit-button {
+  padding: 0.5rem 1rem;
+  background-color: #00ff95;
+  color: #191a00;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-top: 0.5rem;
+}
+
+.auth-submit-button:hover {
+  background-color: #00d67d;
+  box-shadow: 0 0 10px #00ff95;
+}
+
+.auth-switch-button {
+  background: none;
+  border: none;
+  color: #ff00e6;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: color 0.3s;
+}
+
+.auth-switch-button:hover {
+  color: #00ff95;
+  text-shadow: 0 0 5px #00ff95;
+}
+
 body {
   background: radial-gradient(circle, #1f1b24, #090909);
   color: #fff;
@@ -468,13 +566,71 @@ input[type="checkbox"] {
   height: 100%;
 }
 
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #00ff95;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.header-container {
+  position: relative;
+  width: 90%;
+  margin: 3rem auto 2rem;
+}
+
 .currentMonthCon {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 2rem;
-  margin-top: 3rem;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.welcome-message {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #00ff95;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
+.logout-button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.welcome-message:hover {
+  text-shadow: 0 0 10px #00ff95, 0 0 20px #00ff95;
+  transition: text-shadow 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #00d67d;
+  box-shadow: 0 0 10px #00ff95;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .currentMonthCon2 {
@@ -496,9 +652,56 @@ input[type="checkbox"] {
   border: none;
 }
 
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: radial-gradient(circle, #1f1b24, #090909);
+  color: #00ff95;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.error-boundary h2 {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+.error-boundary p {
+  font-size: 16px;
+  color: #ffb5f8;
+}
+
 .theDate {
   margin: 1rem;
   font-size: 30px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: #00ff95;
+  font-family: "Poppins", sans-serif;
+}
+
+.loading-container p {
+  margin-top: 1rem;
+  font-size: 16px;
+  text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000,
+    -1px 1px 0 #000000;
+}
+
+.auth-success {
+  color: #00ff95;
+  font-size: 14px;
+  margin: 0.5rem 0;
+  text-shadow: 1px 1px 0 #000000, -1px -1px 0 #000000, 1px -1px 0 #000000,
+    -1px 1px 0 #000000;
 }
 
 .pageLeft,

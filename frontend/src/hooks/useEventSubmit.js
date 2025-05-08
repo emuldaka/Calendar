@@ -1,33 +1,32 @@
-import { useState } from "react";
+import { useCallback } from "react";
 
 export const useEventSubmit = () => {
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  const eventSubmit = async (title, date) => {
-    setIsLoading(true);
-    setError(null);
+  const eventSubmit = useCallback(
+    async (title, date, authHeader) => {
+      try {
+        const response = await fetch(`${apiUrl}/api/events`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authHeader,
+          },
+          body: JSON.stringify({ title, date }),
+        });
+        const json = await response.json();
+        if (!response.ok) {
+          console.log(json.error);
+        }
+        if (response.ok) {
+          return true;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [apiUrl]
+  );
 
-    const localDate = new Date(date); // `date` is in UTC
-    const localDateString = localDate.toISOString().slice(0, 16);
-
-    const response = await fetch(`${apiUrl}/api/events`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, date: localDateString }),
-    });
-    const json = await response.json();
-
-    if (!response.ok) {
-      setIsLoading(false);
-      setError(json.error);
-    }
-    if (response.ok) {
-      setIsLoading(false);
-      alert("Event Sent!");
-    }
-  };
-  return { eventSubmit, isLoading, error };
+  return { eventSubmit };
 };

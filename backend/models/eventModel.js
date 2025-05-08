@@ -1,15 +1,17 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
-
-const eventSchema = new Schema({
+const eventSchema = mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: [true, "Please add a title"],
   },
   date: {
     type: Date,
-    required: true,
+    required: [true, "Please add a date"],
+  },
+  userId: {
+    type: String,
+    required: [true, "Please associate an event with a user"],
   },
 });
 
