@@ -11,6 +11,8 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
 
   const authHeaderValue = useMemo(() => authHeader(), [authHeader]);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   let timeSlice = date.substring(11, 16);
   console.log(date, timeSlice);
 
@@ -43,7 +45,7 @@ function Event({ id, title, date, isChecked, handleCheckClick }) {
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/events", {
+    const response = await fetch(`${apiUrl}/api/events`, {
       method: "PATCH",
       headers: {
         Authorization: authHeaderValue,
