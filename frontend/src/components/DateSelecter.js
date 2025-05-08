@@ -4,7 +4,8 @@ import { CalendarContext } from "../contexts/CalendarContext";
 import "react-datepicker/dist/react-datepicker.css";
 
 export const DateSelecter = () => {
-  const { dateTime, setDateTime } = useContext(CalendarContext);
+  const { dateTime, setDateTime, cellDay, monthPagination, yearPagination } =
+    useContext(CalendarContext);
 
   return (
     <div className="DatePickerWrapper">
