@@ -40,10 +40,11 @@ function App() {
         authName="_auth"
         cookieDomain={
           process.env.NODE_ENV === "production"
-            ? "calendar-8iqu.onrender.com"
+            ? "emuldaka.site" // Match your production domain
             : "localhost"
         }
         cookieSecure={process.env.NODE_ENV === "production"}
+        cookieSameSite={process.env.NODE_ENV === "production" ? "Lax" : "Lax"} // Same-origin, so Lax is fine
       >
         <CalendarContextProvider value={isFormDisplayed}>
           <MainContent />

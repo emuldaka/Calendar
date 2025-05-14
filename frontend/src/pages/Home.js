@@ -27,25 +27,22 @@ function Home() {
     setYearPagination,
     currentCellDate,
     setCurrentCellDate,
-    // dateTime,
-    // setDateTime,
   } = useContext(CalendarContext);
   const signOut = useSignOut();
   const authUser = useAuthUser();
-  const authHeader = useAuthHeader();
+  const authHeaderHook = useAuthHeader(); // Get the hook function
   const [monthDays, setMonthDays] = useState([
     31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
   ]);
   const [monthlyFetch, setMonthlyFetch] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
+  const isFetchingRef = useRef(false);
   const apiUrl = process.env.REACT_APP_API_URL;
-  const fetchTimeoutRef = useRef(null);
-  const retryCountRef = useRef(0);
-  const hasFetchedRef = useRef(false);
-  const authHeaderValue = useMemo(() => authHeader(), [authHeader]);
-
   const isAuthenticated = !!authUser();
 
+  // Memoize the authHeader value to prevent recreation on every render
+  const authHeader = useMemo(() => authHeaderHook(), [authHeaderHook]);
+
+  // Set current time once on mount
   useEffect(() => {
     const now = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
@@ -90,83 +87,39 @@ function Home() {
     ]
   );
 
+  // Memoized fetch function
   const fetchCurrentEvents = useCallback(async () => {
-    if (isFetching || !isAuthenticated) return;
-    setIsFetching(true);
+    if (isFetchingRef.current || !isAuthenticated) return;
+    isFetchingRef.current = true;
+    console.log("Fetching events in Home.js");
 
     const month =
       monthPagination < 10 ? `0${monthPagination}` : monthPagination;
-    const maxRetries = 3;
-
     try {
       const response = await fetch(
         `${apiUrl}/api/events/month/${yearPagination}-${month}`,
         {
-          headers: {
-            Authorization: authHeaderValue,
-          },
+          headers: { Authorization: authHeader },
+          credentials: "include", // Ensure cookies are sent
         }
       );
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
-      }
       const json = await response.json();
-      const arr = json.map((event) => event.date.substring(8, 10));
-      setMonthlyFetch(arr);
-      retryCountRef.current = 0;
+      setMonthlyFetch(json.map((event) => event.date.substring(8, 10)));
     } catch (error) {
-      console.error("Error fetching events:", error, {
-        status: error.response?.status,
-        headers: authHeaderValue,
-      });
-      if (retryCountRef.current < maxRetries) {
-        retryCountRef.current += 1;
-        fetchTimeoutRef.current = setTimeout(() => fetchCurrentEvents(), 5000);
-      } else {
-        console.error("Max retries reached, stopping fetch attempts.");
-      }
+      console.error("Error fetching events:", error);
     } finally {
-      setIsFetching(false);
+      isFetchingRef.current = false;
     }
-  }, [
-    monthPagination,
-    yearPagination,
-    apiUrl,
-    authHeaderValue,
-    isAuthenticated,
-  ]);
+  }, [monthPagination, yearPagination, apiUrl, authHeader, isAuthenticated]);
 
-  // Debug fetchCurrentEvents recreation
-  const fetchCurrentEventsRef = useRef(fetchCurrentEvents);
+  // Effect to fetch events when month/year changes
   useEffect(() => {
-    if (fetchCurrentEventsRef.current !== fetchCurrentEvents) {
-      console.log("fetchCurrentEvents recreated");
-      fetchCurrentEventsRef.current = fetchCurrentEvents;
-    }
-  }, [fetchCurrentEvents]);
-
-  // Reset retry count and hasFetched on pagination change
-  useEffect(() => {
-    retryCountRef.current = 0;
-    hasFetchedRef.current = false;
-  }, [monthPagination, yearPagination]);
-
-  useEffect(() => {
-    console.log("useEffect triggered", {
-      monthPagination,
-      yearPagination,
-      isFormDisplayed,
-      isAuthenticated,
-    });
-    if (!isFormDisplayed && isAuthenticated && !hasFetchedRef.current) {
-      hasFetchedRef.current = true;
-
+    console.log("Home.js useEffect triggered");
+    if (!isFormDisplayed && isAuthenticated) {
       fetchCurrentEvents();
-      console.log("fetched");
     }
-    return () => {
-      if (fetchTimeoutRef.current) clearTimeout(fetchTimeoutRef.current);
-    };
   }, [
     monthPagination,
     yearPagination,
@@ -174,12 +127,6 @@ function Home() {
     fetchCurrentEvents,
     isAuthenticated,
   ]);
-
-  useEffect(() => {
-    if (!isFormDisplayed) {
-      fetchCurrentEvents();
-    }
-  }, [isFormDisplayed, fetchCurrentEvents]);
 
   const emptyCells = useCallback(() => {
     function doubleDigitFormatting(number) {
@@ -252,19 +199,15 @@ function Home() {
     return arr;
   }, [handleClick, monthDays, monthPagination, monthlyFetch, yearPagination]);
 
+  useEffect(() => {
+    emptyCells();
+  }, [emptyCells, isFormDisplayed]);
+
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
 
-  const debounce = (func, wait) => {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  };
-
-  const leftPagination = debounce(() => {
+  function leftPagination() {
     if (monthPagination === 1) {
       setMonthDays(
         isLeapYear(yearPagination - 1)
@@ -276,9 +219,9 @@ function Home() {
     } else {
       setMonthPagination(monthPagination - 1);
     }
-  }, 300);
+  }
 
-  const rightPagination = debounce(() => {
+  function rightPagination() {
     if (monthPagination === 12) {
       setMonthDays(
         isLeapYear(yearPagination + 1)
@@ -290,7 +233,7 @@ function Home() {
     } else {
       setMonthPagination(monthPagination + 1);
     }
-  }, 300);
+  }
 
   const currentMonthYearDisplay = `${useCurrentMonth(
     monthPagination
@@ -312,7 +255,7 @@ function Home() {
             <MdOutlineArrowCircleLeft size={50} />
           </button>
           <div className="theDate">
-            {currentCellDate} - Selected Day's Events - Central Time (CDT)
+            {currentCellDate} - Selected Day's Events
           </div>
         </div>
       ) : (
