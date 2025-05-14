@@ -1,6 +1,9 @@
 import { useCallback } from "react";
+import { useContext } from "react";
+import { CalendarContext } from "../contexts/CalendarContext";
 
 export const useEventSubmit = () => {
+  const { currentCellDate } = useContext(CalendarContext);
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const eventSubmit = useCallback(

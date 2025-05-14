@@ -27,8 +27,8 @@ function Home() {
     setYearPagination,
     currentCellDate,
     setCurrentCellDate,
-    dateTime,
-    setDateTime,
+    // dateTime,
+    // setDateTime,
   } = useContext(CalendarContext);
   const signOut = useSignOut();
   const authUser = useAuthUser();
@@ -304,7 +304,7 @@ function Home() {
             <MdOutlineArrowCircleLeft size={50} />
           </button>
           <div className="theDate">
-            {currentCellDate} - Selected Day's Events
+            {currentCellDate} - Selected Day's Events - Central Time (CDT)
           </div>
         </div>
       ) : (

@@ -186,12 +186,20 @@ function InputForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    console.log(new Date(dateTime), "this is an example of a newDate datetime");
+    console.log(dateTime, "this is an example of a datetime");
+
     const adjustedDate = new Date(dateTime);
+
+    const correctedDate = new Date(adjustedDate.getTime() - 5 * 60 * 60 * 1000);
+
     if (isNaN(adjustedDate.getTime())) {
       console.error("Invalid dateTime in handleSubmit:", dateTime);
       return;
     }
-    const isoDate = adjustedDate.toISOString();
+
+    const isoDate = correctedDate.toISOString();
 
     console.log("Submitting event:", {
       title: entryText,
