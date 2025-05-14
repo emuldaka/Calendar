@@ -160,7 +160,9 @@ function Home() {
     });
     if (!isFormDisplayed && isAuthenticated && !hasFetchedRef.current) {
       hasFetchedRef.current = true;
+
       fetchCurrentEvents();
+      console.log("fetched");
     }
     return () => {
       if (fetchTimeoutRef.current) clearTimeout(fetchTimeoutRef.current);
@@ -172,6 +174,12 @@ function Home() {
     fetchCurrentEvents,
     isAuthenticated,
   ]);
+
+  useEffect(() => {
+    if (!isFormDisplayed) {
+      fetchCurrentEvents();
+    }
+  }, [isFormDisplayed, fetchCurrentEvents]);
 
   const emptyCells = useCallback(() => {
     function doubleDigitFormatting(number) {
