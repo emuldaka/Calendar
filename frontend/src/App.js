@@ -43,7 +43,8 @@ function App() {
             ? "emuldaka.site" // Match your production domain
             : "localhost"
         }
-        cookieSecure={process.env.NODE_ENV === "production"}
+        cookiePath="/" // Ensure cookie is available across all routes
+        cookieSecure={process.env.NODE_ENV === "production"} // Requires HTTPS in production
         cookieSameSite={process.env.NODE_ENV === "production" ? "Lax" : "Lax"} // Same-origin, so Lax is fine
       >
         <CalendarContextProvider value={isFormDisplayed}>

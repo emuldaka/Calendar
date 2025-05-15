@@ -9,14 +9,21 @@ const authRoutes = require("./routes/auth");
 
 const cors = require("cors");
 
-// Configure CORS to allow credentials and specify the frontend origin
+// Configure CORS to allow credentials and dynamically set the origin
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://emuldaka.site" // Production frontend URL
-        : "http://localhost:3000", // Local frontend URL
-    credentials: true, // Allow cookies to be sent
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:3000", // Local frontend
+        "https://emuldaka.site", // Production frontend
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
