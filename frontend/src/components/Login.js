@@ -7,12 +7,33 @@ function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [validationError, setValidationError] = useState(""); // New state for validation errors
   const signIn = useSignIn();
   const apiUrl = process.env.REACT_APP_API_URL;
+
+  // Regex patterns for email and password
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex = /^.{6,12}$/; // 6-12 characters
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setValidationError(""); // Clear previous validation errors
+
+    // Validate email
+    if (!emailRegex.test(email)) {
+      setValidationError(
+        "Please enter a valid email address (e.g., user@example.com)"
+      );
+      return;
+    }
+
+    // Validate password
+    if (!passwordRegex.test(password)) {
+      setValidationError("Password must be between 6 and 12 characters long");
+      return;
+    }
+
     setIsLoading(true);
     const endpoint = isRegister ? "register" : "login";
     try {
@@ -25,14 +46,18 @@ function Login() {
       if (!response.ok) {
         throw new Error(data.error || "Authentication failed");
       }
-      signIn({
+      const success = signIn({
         token: data.token,
-        expiresIn: 60,
+        expiresIn: 60, // 1 hour
         tokenType: "Bearer",
         authState: { email },
       });
-      setEmail("");
-      setPassword("");
+      if (success) {
+        setEmail("");
+        setPassword("");
+      } else {
+        throw new Error("Failed to sign in");
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -66,6 +91,7 @@ function Login() {
             disabled={isLoading}
           />
         </div>
+        {validationError && <p className="auth-error">{validationError}</p>}
         {error && <p className="auth-error">{error}</p>}
         <button
           type="submit"
